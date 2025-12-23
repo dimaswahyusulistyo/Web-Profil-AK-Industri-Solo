@@ -13,14 +13,11 @@ return new class extends Migration
         | PAGES (HALAMAN)
         |--------------------------------------------------
         */
-        Schema::create('pages', function (Blueprint $table) {
+        Schema::create('konten_biasa', function (Blueprint $table) {
             $table->id();
             $table->string('judul');
-            $table->string('slug')->unique();
-            $table->string('layout');
+            $table->string('url_halaman')->unique();
             $table->longText('konten')->nullable();
-            $table->json('konfigurasi')->nullable();
-            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
 
@@ -29,19 +26,30 @@ return new class extends Migration
         | MENUS (MENU & SUB MENU)
         |--------------------------------------------------
         */
-        Schema::create('menus', function (Blueprint $table) {
+        Schema::create('menu', function (Blueprint $table) {
             $table->id();
             $table->string('nama_menu');
+
             $table->foreignId('parent_id')
-                  ->nullable()
-                  ->constrained('menus')
-                  ->nullOnDelete();
-            $table->enum('tipe', ['halaman', 'list', 'url']);
-            $table->unsignedBigInteger('target_id')->nullable();
-            $table->string('url')->nullable();
-            $table->enum('posisi', ['header', 'footer'])->default('header');
+                ->nullable()
+                ->constrained('menu')
+                ->nullOnDelete();
+
+            $table->enum('link_type', [
+                'home',
+                'konten_biasa',
+                'berita_list',
+                'pengumuman_list',
+            ]);
+
+            $table->foreignId('page_id')
+                ->nullable()
+                ->constrained('konten_biasa')
+                ->nullOnDelete();
+
+            $table->string('url_halaman')->nullable();
             $table->integer('urutan')->default(0);
-            $table->boolean('is_active')->default(true);
+
             $table->timestamps();
         });
 
@@ -54,9 +62,8 @@ return new class extends Migration
             $table->id();
             $table->string('judul')->nullable();
             $table->string('gambar');
-            $table->string('tautan')->nullable();
+            $table->string('url')->nullable();
             $table->integer('urutan')->default(0);
-            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
 
@@ -65,13 +72,12 @@ return new class extends Migration
         | SERVICES (LAYANAN / SHORTCUT HOME)
         |--------------------------------------------------
         */
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('layanan', function (Blueprint $table) {
             $table->id();
             $table->string('nama_layanan');
             $table->string('ikon')->nullable();
             $table->string('tautan');
             $table->integer('urutan')->default(0);
-            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
 
@@ -80,10 +86,11 @@ return new class extends Migration
         | NEWS CATEGORIES (KATEGORI BERITA)
         |--------------------------------------------------
         */
-        Schema::create('news_categories', function (Blueprint $table) {
+        Schema::create('kategori_berita', function (Blueprint $table) {
             $table->id();
             $table->string('nama_kategori');
-            $table->string('slug')->unique();
+            $table->string('url_halaman')->unique();
+            $table->timestamps();
         });
 
         /*
@@ -91,18 +98,16 @@ return new class extends Migration
         | NEWS (BERITA)
         |--------------------------------------------------
         */
-        Schema::create('news', function (Blueprint $table) {
+        Schema::create('berita', function (Blueprint $table) {
             $table->id();
             $table->string('judul');
-            $table->string('slug')->unique();
-            $table->foreignId('category_id')
+            $table->string('url_halaman')->unique();
+            $table->foreignId('kategori_id')
                   ->nullable()
-                  ->constrained('news_categories')
+                  ->constrained('kategori_berita')
                   ->nullOnDelete();
             $table->longText('konten');
             $table->string('thumbnail')->nullable();
-            $table->timestamp('tanggal_publikasi')->nullable();
-            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
 
@@ -111,14 +116,10 @@ return new class extends Migration
         | ANNOUNCEMENTS (PENGUMUMAN)
         |--------------------------------------------------
         */
-        Schema::create('announcements', function (Blueprint $table) {
+        Schema::create('pengumuman', function (Blueprint $table) {
             $table->id();
             $table->string('judul');
             $table->longText('konten');
-            $table->string('lampiran')->nullable();
-            $table->date('tanggal_mulai')->nullable();
-            $table->date('tanggal_selesai')->nullable();
-            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
 
@@ -127,13 +128,12 @@ return new class extends Migration
         | PARTNERS (MITRA)
         |--------------------------------------------------
         */
-        Schema::create('partners', function (Blueprint $table) {
+        Schema::create('mitra', function (Blueprint $table) {
             $table->id();
             $table->string('nama_mitra');
             $table->string('logo');
-            $table->string('website')->nullable();
+            $table->string('url')->nullable();
             $table->integer('urutan')->default(0);
-            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
 
@@ -142,13 +142,14 @@ return new class extends Migration
         | COMMENTS (KOMENTAR - POLYMORPHIC)
         |--------------------------------------------------
         */
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('komentar', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
             $table->string('email')->nullable();
             $table->longText('isi_komentar');
             $table->string('commentable_type');
             $table->unsignedBigInteger('commentable_id');
+            $table->longText('tanggapan')->nullable();
             $table->boolean('is_approved')->default(false);
             $table->timestamps();
 
@@ -160,7 +161,7 @@ return new class extends Migration
         | COMPLAINTS (ASPIRASI & ADUAN)
         |--------------------------------------------------
         */
-        Schema::create('complaints', function (Blueprint $table) {
+        Schema::create('aspirasi_aduan', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
             $table->string('email');
@@ -177,27 +178,29 @@ return new class extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('nama_role');
+            $table->timestamps();
         });
 
-        Schema::create('role_user', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+        Schema::create('user_roles', function (Blueprint $table) {
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('role_id')->constrained()->cascadeOnDelete();
+            $table->primary(['user_id', 'role_id']);
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('role_user');
+        Schema::dropIfExists('user_roles');
         Schema::dropIfExists('roles');
-        Schema::dropIfExists('complaints');
-        Schema::dropIfExists('comments');
-        Schema::dropIfExists('partners');
-        Schema::dropIfExists('announcements');
-        Schema::dropIfExists('news');
-        Schema::dropIfExists('news_categories');
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('aspirasi_aduan');
+        Schema::dropIfExists('komentar');
+        Schema::dropIfExists('mitra');
+        Schema::dropIfExists('pengumuman');
+        Schema::dropIfExists('berita');
+        Schema::dropIfExists('kategori_berita');
+        Schema::dropIfExists('layanan');
         Schema::dropIfExists('sliders');
-        Schema::dropIfExists('menus');
-        Schema::dropIfExists('pages');
+        Schema::dropIfExists('menu');
+        Schema::dropIfExists('konten_biasa');
     }
 };

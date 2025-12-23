@@ -2,37 +2,30 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
+    use HasFactory;
+    protected $table = 'menu';
+
     protected $fillable = [
-        'nama_menu',
-        'parent_id',
-        'tipe',
-        'target_id',
-        'url',
-        'posisi',
-        'urutan',
-        'is_active',
+        'nama_menu', 'parent_id', 'link_type', 'page_id', 'url_halaman', 'urutan'
     ];
 
-    protected $casts = [
-        'is_active' => 'boolean',
-    ];
+    public function children()
+    {
+        return $this->hasMany(Menu::class, 'parent_id')->orderBy('urutan');
+    }
 
     public function parent()
     {
         return $this->belongsTo(Menu::class, 'parent_id');
     }
 
-    public function children()
-    {
-        return $this->hasMany(Menu::class, 'parent_id');
-    }
-
     public function page()
     {
-        return $this->belongsTo(Page::class, 'target_id');
+        return $this->belongsTo(KontenBiasa::class, 'page_id');
     }
 }

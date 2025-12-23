@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Filament\Resources\KategoriBeritas\Pages;
+
+use App\Filament\Resources\KategoriBeritas\KategoriBeritaResource;
+use Filament\Actions\CreateAction;
+use Filament\Resources\Pages\ListRecords;
+
+class ListKategoriBeritas extends ListRecords
+{
+    protected static string $resource = KategoriBeritaResource::class;
+    protected static ?string $title = 'Daftar Kategori Berita';
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            CreateAction::make(),
+        ];
+    }
+}

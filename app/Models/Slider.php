@@ -3,18 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Slider extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'judul',
         'gambar',
-        'tautan',
-        'urutan',
-        'is_active',
+        'url',
+        'urutan'
     ];
 
     protected $casts = [
-        'is_active' => 'boolean',
+        'urutan' => 'integer'
     ];
 }
