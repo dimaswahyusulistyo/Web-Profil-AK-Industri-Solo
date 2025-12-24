@@ -25,6 +25,7 @@ class MenuForm
                         ->label('Parent Menu')
                         ->relationship('parent', 'nama_menu')
                         ->searchable()
+                        ->preload()
                         ->nullable()
                         ->helperText('Kosongkan jika menu utama'),
 
@@ -41,16 +42,25 @@ class MenuForm
                 ->schema([
 
                     Select::make('link_type')
-                        ->label('Tipe Link')
+                        ->label('Layout')
                         ->required()
                         ->options([
-                            'home' => 'Home',
+                            'home' => 'Beranda',
                             'konten_biasa' => 'Halaman Statis',
                             'berita_list' => 'Daftar Berita',
                             'pengumuman_list' => 'Daftar Pengumuman',
                             'external' => 'Link External',
                         ])
-                        ->live(),
+                        ->live()
+                        ->afterStateUpdated(function ($set, $state) {
+                            $set('link_id', null);
+                            $set('link_url', match ($state) {
+                                'home' => '/',
+                                'berita_list' => '/berita',
+                                'pengumuman_list' => '/pengumuman',
+                                default => null,
+                            });
+                        }),
 
                     Select::make('link_id')
                         ->label('Pilih Halaman')

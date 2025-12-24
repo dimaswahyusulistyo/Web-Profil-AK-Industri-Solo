@@ -14,7 +14,8 @@ class KontenBiasa extends Model
     protected $fillable = [
         'judul',
         'url_halaman',
-        'konten'
+        'konten',
+        'embed_url'
     ];
 
     // Relasi ke menu

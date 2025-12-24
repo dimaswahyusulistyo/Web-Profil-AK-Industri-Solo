@@ -31,8 +31,10 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
-            ->brandName('Super AK-Tekstil')
+            ->brandName('AK-Tekstil')
             ->brandLogo(asset('images/logo-aktekstil.jpg'))
+            ->favicon(asset('images/logo-aktekstil.jpg'))
+            ->brandName('AK Tekstil')
             ->brandLogoHeight('2rem')
             ->darkModeBrandLogo(asset('images/logo-aktekstil.jpg'))
 

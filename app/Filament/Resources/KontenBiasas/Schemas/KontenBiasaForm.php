@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\KontenBiasas\Schemas;
 
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Hidden;
@@ -38,6 +39,11 @@ class KontenBiasaForm
                 ->columnSpanFull()
                 ->dehydrated() 
                 ->nullable(),
+
+            TextInput::make('embed_url')
+                ->label('Embed URL')
+                ->nullable()
+                ->helperText('Masukkan URL embed, misal Google forms.'),
         ]);
     }
 }

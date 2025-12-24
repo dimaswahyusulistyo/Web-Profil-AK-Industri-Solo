@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('judul');
             $table->string('url_halaman')->unique();
             $table->longText('konten')->nullable();
+            $table->string('embed_url')->nullable();
             $table->timestamps();
         });
 
