@@ -20,6 +20,7 @@ class LayananForm
                 ->label('Ikon Layanan')
                 ->image()
                 ->directory('layanan')
+                ->disk('public') 
                 ->imageEditor()
                 ->nullable(),
 
