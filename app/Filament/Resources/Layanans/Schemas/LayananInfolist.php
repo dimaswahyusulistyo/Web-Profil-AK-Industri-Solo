@@ -14,6 +14,7 @@ class LayananInfolist
             ->components([
                 TextEntry::make('nama_layanan'),
                 ImageEntry::make('ikon')
+                    ->disk('public')
                     ->label('Ikon Layanan'),
                 TextEntry::make('tautan'),
                 TextEntry::make('urutan')

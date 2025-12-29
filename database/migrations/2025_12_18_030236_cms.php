@@ -61,7 +61,7 @@ return new class extends Migration
         */
         Schema::create('sliders', function (Blueprint $table) {
             $table->id();
-            $table->string('judul')->nullable();
+            $table->string('judul');
             $table->string('gambar');
             $table->string('url')->nullable();
             $table->integer('urutan')->default(0);
@@ -108,7 +108,7 @@ return new class extends Migration
                   ->constrained('kategori_berita')
                   ->nullOnDelete();
             $table->longText('konten');
-            $table->string('thumbnail')->nullable();
+            $table->string('thumbnail');
             $table->timestamps();
         });
 
@@ -120,6 +120,7 @@ return new class extends Migration
         Schema::create('pengumuman', function (Blueprint $table) {
             $table->id();
             $table->string('judul');
+            $table->string('thumbnail');
             $table->longText('konten');
             $table->timestamps();
         });
@@ -146,7 +147,7 @@ return new class extends Migration
         Schema::create('komentar', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('email')->nullable();
+            $table->string('email');
             $table->longText('isi_komentar');
             $table->string('commentable_type');
             $table->unsignedBigInteger('commentable_id');

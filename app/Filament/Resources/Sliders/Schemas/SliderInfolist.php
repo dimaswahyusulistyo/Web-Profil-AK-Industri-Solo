@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Sliders\Schemas;
 
+use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
@@ -11,8 +12,9 @@ class SliderInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('judul'),
-                TextEntry::make('gambar'),
+                ImageEntry::make('gambar')
+                    ->disk('public')
+                    ->label('Gambar'),
                 TextEntry::make('url'),
                 TextEntry::make('urutan')
                     ->numeric(),

@@ -24,8 +24,9 @@ class LayanansTable
                     ->sortable(),
 
                 ImageColumn::make('ikon')
+                    ->disk('public')
                     ->label('Ikon')
-                    ->square(),
+                    ->height(60),
 
                 TextColumn::make('tautan')
                     ->label('Tautan'),

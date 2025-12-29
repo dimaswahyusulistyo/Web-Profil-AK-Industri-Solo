@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\BeritaController;
 use App\Http\Controllers\Api\PengumumanController;
 use App\Http\Controllers\Api\LayananController;
 use App\Http\Controllers\Api\MitraController;
+use App\Http\Controllers\Api\SliderController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('menu')->group(function () {
@@ -31,6 +32,11 @@ Route::prefix('pengumuman')->group(function () {
 Route::prefix('layanan')->group(function () {
     Route::get('/', [LayananController::class, 'index']);
     Route::get('/{id}', [LayananController::class, 'show']);
+});
+
+Route::prefix('slider')->group(function () {
+    Route::get('/', [SliderController::class, 'index']);
+    Route::get('/{id}', [SliderController::class, 'show']);
 });
 
 Route::prefix('mitra')->group(function () {

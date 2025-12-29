@@ -17,7 +17,9 @@ class SlidersTable
     {
         return $table
             ->columns([
-                ImageColumn::make('gambar')->height(60),
+                ImageColumn::make('gambar')
+                    ->disk('public')
+                    ->height(60),
                 TextColumn::make('judul')->searchable(),
                 TextColumn::make('urutan')->sortable(),
             ])

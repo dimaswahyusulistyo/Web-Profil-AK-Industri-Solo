@@ -46,6 +46,7 @@ class BeritaForm
                 ->label('Thumbnail')
                 ->image()
                 ->directory('berita')
+                ->disk('public') 
                 ->imageEditor()
                 ->nullable(),
 

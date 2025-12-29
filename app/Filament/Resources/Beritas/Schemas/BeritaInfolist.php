@@ -13,6 +13,7 @@ class BeritaInfolist
         return $schema->schema([
 
             ImageEntry::make('thumbnail')
+                ->disk('public')
                 ->label('Thumbnail'),
 
             TextEntry::make('judul')

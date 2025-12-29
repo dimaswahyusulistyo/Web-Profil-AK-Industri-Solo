@@ -21,7 +21,7 @@ class MitrasTable
                 ImageColumn::make('logo')
                     ->label('Logo')
                     ->disk('public')
-                    ->height(50),
+                    ->height(60),
 
                 TextColumn::make('nama_mitra')
                     ->label('Mitra')

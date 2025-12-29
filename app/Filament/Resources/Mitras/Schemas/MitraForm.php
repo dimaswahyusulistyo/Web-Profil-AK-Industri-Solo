@@ -20,6 +20,7 @@ class MitraForm
                 ->label('Logo Mitra')
                 ->image()
                 ->directory('mitra')
+                ->disk('public')
                 ->imagePreviewHeight('100')
                 ->maxSize(2048)
                 ->required(),

@@ -20,7 +20,8 @@ class BeritasTable
 
                 ImageColumn::make('thumbnail')
                     ->label('Thumb')
-                    ->square(),
+                    ->disk('public')
+                    ->height(60),
 
                 TextColumn::make('judul')
                     ->searchable()

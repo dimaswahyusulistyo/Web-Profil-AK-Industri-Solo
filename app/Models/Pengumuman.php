@@ -13,6 +13,7 @@ class Pengumuman extends Model
     
     protected $fillable = [
         'judul',
+        'thumbnail',
         'konten'
     ];
 

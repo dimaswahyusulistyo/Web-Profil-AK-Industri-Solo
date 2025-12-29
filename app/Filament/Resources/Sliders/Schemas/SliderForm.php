@@ -11,11 +11,13 @@ class SliderForm
     public static function configure(Schema $schema): Schema
     {
         return $schema->schema([
-            TextInput::make('judul'),
+            TextInput::make('judul')
+                ->required(),
 
             FileUpload::make('gambar')
                 ->image()
                 ->directory('sliders')
+                ->disk('public')  
                 ->required(),
 
             TextInput::make('url')->url(),

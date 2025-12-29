@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Mitras\Schemas;
 
 use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\ImageEntry;
 use Filament\Schemas\Schema;
 
 class MitraInfolist
@@ -12,7 +13,9 @@ class MitraInfolist
         return $schema
             ->components([
                 TextEntry::make('nama_mitra'),
-                TextEntry::make('logo'),
+                ImageEntry::make('logo')
+                    ->disk('public')
+                    ->label('Logo'),
                 TextEntry::make('url'),
                 TextEntry::make('urutan')
                     ->numeric(),
