@@ -32,6 +32,16 @@ class BeritaResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
+    public static function getModelLabel(): string
+    {
+        return 'Berita';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Daftar Berita';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return BeritaForm::configure($schema);

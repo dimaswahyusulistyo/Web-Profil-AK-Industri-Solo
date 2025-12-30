@@ -30,6 +30,16 @@ class MitraResource extends Resource
 
     protected static ?int $navigationSort = 5;
 
+    public static function getModelLabel(): string
+    {
+        return 'Mitra';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Daftar Mitra';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return MitraForm::configure($schema);

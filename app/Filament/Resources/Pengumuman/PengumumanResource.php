@@ -31,6 +31,16 @@ class PengumumanResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
+    public static function getModelLabel(): string
+    {
+        return 'Pengumuman';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Daftar Pengumuman';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return PengumumanForm::configure($schema);

@@ -28,6 +28,16 @@ class AspirasiAduanResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'nama';
 
+    public static function getModelLabel(): string
+    {
+        return 'Aspirasi & Aduan';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Daftar Aspirasi & Aduan';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return AspirasiAduanForm::configure($schema);

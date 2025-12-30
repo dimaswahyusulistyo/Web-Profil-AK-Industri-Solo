@@ -32,6 +32,16 @@ class KategoriBeritaResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
+    public static function getModelLabel(): string
+    {
+        return 'Kategori Berita';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Daftar Kategori Berita';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return KategoriBeritaForm::configure($schema);

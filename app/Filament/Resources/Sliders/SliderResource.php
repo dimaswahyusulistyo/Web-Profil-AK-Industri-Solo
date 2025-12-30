@@ -31,6 +31,16 @@ class SliderResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    public static function getModelLabel(): string
+    {
+        return 'Slider';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Daftar Slider';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return SliderForm::configure($schema);

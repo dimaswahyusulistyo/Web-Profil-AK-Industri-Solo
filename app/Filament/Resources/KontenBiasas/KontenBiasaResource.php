@@ -28,6 +28,16 @@ class KontenBiasaResource extends Resource
     protected static ?string $recordTitleAttribute = 'judul';
     protected static ?int $navigationSort = 2;
 
+    public static function getModelLabel(): string
+    {
+        return 'Konten Biasa';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Daftar Konten Biasa';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return KontenBiasaForm::configure($schema);

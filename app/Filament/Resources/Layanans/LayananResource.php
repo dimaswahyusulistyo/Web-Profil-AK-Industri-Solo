@@ -31,6 +31,16 @@ class LayananResource extends Resource
 
     protected static ?int $navigationSort = 4;
 
+    public static function getModelLabel(): string
+    {
+        return 'Layanan';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Daftar Layanan';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return LayananForm::configure($schema);

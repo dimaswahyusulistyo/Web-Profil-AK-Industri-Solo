@@ -31,9 +31,19 @@ class MenuResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    public static function getModelLabel(): string
+    {
+        return 'Menu';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Daftar Menu';
+    }
+
     public static function form(Schema $schema): Schema
     {
-        return MenuForm::configure($schema);
+        return $schema->schema(MenuForm::schema());
     }
 
     public static function table(Table $table): Table
@@ -43,7 +53,7 @@ class MenuResource extends Resource
 
     public static function infolist(Schema $schema): Schema
     {
-        return MenuInfolist::configure($schema);
+        return $schema->schema(MenuInfolist::schema());
     }
 
     public static function getPages(): array

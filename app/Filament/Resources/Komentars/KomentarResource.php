@@ -24,6 +24,16 @@ class KomentarResource extends Resource
     protected static ?int $navigationSort = 2;
     protected static ?string $recordTitleAttribute = 'nama';
 
+    public static function getModelLabel(): string
+    {
+        return 'Komentar';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Daftar Komentar';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return KomentarForm::configure($schema);

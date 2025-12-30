@@ -2,6 +2,10 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\ContentChartWidget;
+use App\Filament\Widgets\SecondaryStatsWidget;
+use App\Filament\Widgets\StatsOverviewWidget;
+use Filament\Enums\ThemeMode;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -11,7 +15,6 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -29,14 +32,13 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Blue,
             ])
-            ->brandName('AK-Tekstil')
-            ->brandLogo(asset('images/logo-aktekstil.jpg'))
-            ->favicon(asset('images/logo-aktekstil.jpg'))
+            ->defaultThemeMode(ThemeMode::Light)
             ->brandName('AK Tekstil')
+            ->brandLogo(asset('images/AK.png'))
             ->brandLogoHeight('2rem')
-            ->darkModeBrandLogo(asset('images/logo-aktekstil.jpg'))
+            ->favicon(asset('images/logo-aktekstil.jpg'))
 
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
@@ -46,7 +48,9 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 AccountWidget::class,
-                FilamentInfoWidget::class,
+                StatsOverviewWidget::class,
+                SecondaryStatsWidget::class,
+                ContentChartWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

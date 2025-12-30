@@ -11,7 +11,11 @@ class Menu extends Model
     protected $table = 'menu';
 
     protected $fillable = [
-        'nama_menu', 'parent_id', 'link_type', 'page_id', 'url_halaman', 'urutan'
+        'nama_menu', 'parent_id', 'menu_type', 'link_type', 'page_id', 'url_halaman', 'urutan'
+    ];
+
+    protected $casts = [
+        'urutan' => 'integer',
     ];
 
     public function children()

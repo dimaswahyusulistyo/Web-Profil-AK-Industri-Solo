@@ -22,12 +22,20 @@ class MenusTable
                     ->searchable()
                     ->sortable(),
 
+                TextColumn::make('menu_type')
+                    ->label('Tipe')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'group' => 'gray',
+                        'link' => 'success',
+                    }),
+
                 TextColumn::make('parent.nama_menu')
                     ->label('Parent')
                     ->placeholder('-'),
 
                 TextColumn::make('link_type')
-                    ->label('Tipe')
+                    ->label('Tipe Layout')
                     ->badge(),
 
                 TextColumn::make('urutan')

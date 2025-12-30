@@ -2,24 +2,25 @@
 
 namespace App\Filament\Resources\Menus\Schemas;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Radio;
 use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 
 class MenuForm
 {
-    public static function configure(Schema $schema): Schema
+    public static function schema(): array
     {
-        return $schema->schema([
-
+        return [
             Section::make('Informasi Menu')
                 ->schema([
-
                     TextInput::make('nama_menu')
                         ->label('Nama Menu')
                         ->required()
-                        ->maxLength(100),
+                        ->maxLength(100)
+                        ->columnSpanFull(),
 
                     Select::make('parent_id')
                         ->label('Parent Menu')
@@ -35,14 +36,32 @@ class MenuForm
                         ->default(0)
                         ->helperText('Semakin kecil semakin di atas'),
 
+                    Radio::make('menu_type')
+                        ->label('Tipe Menu')
+                        ->options([
+                            'group' => 'Group / Dropdown (tanpa halaman)',
+                            'link' => 'Link (dengan halaman/URL)',
+                        ])
+                        ->default('link')
+                        ->required()
+                        ->live()
+                        ->afterStateUpdated(function (Set $set, $state) {
+                            // Clear link fields when switching to group
+                            if ($state === 'group') {
+                                $set('link_type', null);
+                                $set('page_id', null);
+                                $set('url_halaman', null);
+                            }
+                        })
+                        ->helperText('Group: menu induk tanpa tujuan | Link: menu dengan tujuan halaman')
+                        ->columnSpanFull(),
                 ])
                 ->columns(2),
 
             Section::make('Tujuan Menu')
                 ->schema([
-
                     Select::make('link_type')
-                        ->label('Layout')
+                        ->label('Tipe Link')
                         ->required()
                         ->options([
                             'home' => 'Beranda',
@@ -52,9 +71,10 @@ class MenuForm
                             'external' => 'Link External',
                         ])
                         ->live()
-                        ->afterStateUpdated(function ($set, $state) {
-                            $set('link_id', null);
-                            $set('link_url', match ($state) {
+                        ->afterStateUpdated(function (Set $set, $state) {
+                            // Auto-fill URL for predefined types
+                            $set('page_id', null);
+                            $set('url_halaman', match ($state) {
                                 'home' => '/',
                                 'berita_list' => '/berita',
                                 'pengumuman_list' => '/pengumuman',
@@ -62,26 +82,26 @@ class MenuForm
                             });
                         }),
 
-                    Select::make('link_id')
+                    Select::make('page_id')
                         ->label('Pilih Halaman')
                         ->relationship('page', 'judul')
                         ->searchable()
                         ->preload()
-                        ->visible(fn ($get) => $get('link_type') === 'konten_biasa')
-                        ->required(fn ($get) => $get('link_type') === 'konten_biasa'),
+                        ->visible(fn (Get $get) => $get('link_type') === 'konten_biasa')
+                        ->required(fn (Get $get) => $get('link_type') === 'konten_biasa'),
 
-                    TextInput::make('link_url')
+                    TextInput::make('url_halaman')
                         ->label('URL Tujuan')
                         ->placeholder('/berita atau https://example.com')
-                        ->visible(fn ($get) => in_array(
+                        ->visible(fn (Get $get) => in_array(
                             $get('link_type'),
                             ['home', 'berita_list', 'pengumuman_list', 'external']
                         ))
-                        ->required(fn ($get) => in_array(
+                        ->required(fn (Get $get) => in_array(
                             $get('link_type'),
-                            ['berita_list', 'pengumuman_list', 'external']
+                            ['home', 'berita_list', 'pengumuman_list', 'external']
                         ))
-                        ->helperText(fn ($get) => match ($get('link_type')) {
+                        ->helperText(fn (Get $get) => match ($get('link_type')) {
                             'home' => 'Gunakan "/"',
                             'berita_list' => 'Contoh: /berita',
                             'pengumuman_list' => 'Contoh: /pengumuman',
@@ -89,7 +109,9 @@ class MenuForm
                             default => null,
                         }),
                 ])
+                ->visible(fn (Get $get) => $get('menu_type') === 'link')
+                ->description('Tentukan tujuan menu ini')
                 ->columns(2),
-        ]);
+        ];
     }
 }
