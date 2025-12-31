@@ -9,6 +9,7 @@ use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Actions\DeleteAction;
 
 class KomentarsTable
 {
@@ -41,8 +42,9 @@ class KomentarsTable
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
+                // ViewAction::make(),
                 EditAction::make(),
+                DeleteAction::make()->requiresConfirmation(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

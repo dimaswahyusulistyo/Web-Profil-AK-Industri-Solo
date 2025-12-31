@@ -14,7 +14,14 @@ class AspirasiAduan extends Model
     protected $fillable = [
         'nama',
         'email',
+        'no_telp',
+        'kategori_aduan_id',
         'pesan',
         'tanggapan'
     ];
+
+    public function kategori()
+    {
+        return $this->belongsTo(KategoriAduan::class, 'kategori_aduan_id');
+    }
 }

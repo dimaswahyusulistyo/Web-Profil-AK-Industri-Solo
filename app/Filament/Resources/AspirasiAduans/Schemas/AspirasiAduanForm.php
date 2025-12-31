@@ -15,10 +15,21 @@ class AspirasiAduanForm
                 TextInput::make('nama')
                     ->required(),
                 TextInput::make('email')
-                    ->label('Email address')
+                    ->label('Email Address')
                     ->email()
                     ->required(),
+                TextInput::make('no_telp')
+                    ->label('No. Telp')
+                    ->tel()
+                    ->required(),
+                \Filament\Forms\Components\Select::make('kategori_aduan_id')
+                    ->label('Kategori')
+                    ->relationship('kategori', 'nama_kategori')
+                    ->required()
+                    ->searchable()
+                    ->preload(),
                 Textarea::make('pesan')
+                    ->label('Isi Pengaduan')
                     ->required()
                     ->columnSpanFull(),
                 Textarea::make('tanggapan')

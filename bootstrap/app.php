@@ -15,5 +15,19 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->render(function (\Illuminate\Session\TokenMismatchException $e, $request) {
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'Page expired'], 419);
+            }
+            return redirect()->route('filament.admin.auth.login');
+        });
+
+        $exceptions->render(function (\Symfony\Component\HttpKernel\Exception\HttpException $e, $request) {
+            if ($e->getStatusCode() === 419) {
+                 if ($request->expectsJson()) {
+                    return response()->json(['message' => 'Page expired'], 419);
+                }
+                return redirect()->route('filament.admin.auth.login');
+            }
+        });
     })->create();

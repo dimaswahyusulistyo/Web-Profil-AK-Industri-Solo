@@ -16,11 +16,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+        $user = User::create([
             'name' => 'AK Industri Admin',
             'email' => 'admin.AK@filament.test',
             'password' => Hash::make('jaya2026'),
         ]);
+
+        $role = \App\Models\Role::firstOrCreate(['nama_role' => 'Admin']);
+        $user->roles()->attach($role);
 
         $this->command->info('Admin Filament user created: admin.AK@filament.test / jaya2026');
     }

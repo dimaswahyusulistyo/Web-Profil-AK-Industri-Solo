@@ -14,19 +14,24 @@ class KomentarForm
         return $schema
             ->components([
                 TextInput::make('nama')
-                    ->required(),
+                    ->required()
+                    ->disabled(),
                 TextInput::make('email')
                     ->label('Email address')
                     ->email()
-                    ->default(null),
+                    ->default(null)
+                    ->disabled(),
                 Textarea::make('isi_komentar')
                     ->required()
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->disabled(),
                 TextInput::make('commentable_type')
-                    ->required(),
+                    ->required()
+                    ->disabled(),
                 TextInput::make('commentable_id')
                     ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->disabled(),
                 Textarea::make('tanggapan')
                     ->default(null)
                     ->columnSpanFull(),
