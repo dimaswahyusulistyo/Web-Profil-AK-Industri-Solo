@@ -46,7 +46,6 @@ class MenuForm
                         ->required()
                         ->live()
                         ->afterStateUpdated(function (Set $set, $state) {
-                            // Clear link fields when switching to group
                             if ($state === 'group') {
                                 $set('link_type', null);
                                 $set('page_id', null);
@@ -68,7 +67,7 @@ class MenuForm
                             'konten_biasa' => 'Halaman Statis',
                             'berita_list' => 'Daftar Berita',
                             'pengumuman_list' => 'Daftar Pengumuman',
-                            'external' => 'Link External',
+                            'aspirasi_aduan' => 'Aspirasi & Aduan',
                         ])
                         ->live()
                         ->afterStateUpdated(function (Set $set, $state) {
@@ -78,6 +77,7 @@ class MenuForm
                                 'home' => '/',
                                 'berita_list' => '/berita',
                                 'pengumuman_list' => '/pengumuman',
+                                'aspirasi_aduan' => '/aspirasi-aduan',
                                 default => null,
                             });
                         }),
@@ -95,17 +95,17 @@ class MenuForm
                         ->placeholder('/berita atau https://example.com')
                         ->visible(fn (Get $get) => in_array(
                             $get('link_type'),
-                            ['home', 'berita_list', 'pengumuman_list', 'external']
+                            ['home', 'berita_list', 'pengumuman_list', 'aspirasi_aduan']
                         ))
                         ->required(fn (Get $get) => in_array(
                             $get('link_type'),
-                            ['home', 'berita_list', 'pengumuman_list', 'external']
+                            ['home', 'berita_list', 'pengumuman_list', 'aspirasi_aduan']
                         ))
                         ->helperText(fn (Get $get) => match ($get('link_type')) {
                             'home' => 'Gunakan "/"',
                             'berita_list' => 'Contoh: /berita',
                             'pengumuman_list' => 'Contoh: /pengumuman',
-                            'external' => 'Gunakan URL lengkap (https://...)',
+                            'aspirasi_aduan' => 'Contoh: /aspirasi-aduan',
                             default => null,
                         }),
                 ])
