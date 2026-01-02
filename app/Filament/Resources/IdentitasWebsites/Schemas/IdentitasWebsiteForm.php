@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\FooterSettings\Schemas;
+namespace App\Filament\Resources\IdentitasWebsites\Schemas;
 
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\FileUpload;
@@ -9,33 +9,46 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Repeater;
 
-class FooterSettingForm
+class IdentitasWebsiteForm
 {
     public static function configure(Schema $schema): Schema
     {
         return $schema->schema([
-            Section::make('Identity')
+            Section::make('Logo & Deskripsi')
                 ->schema([
-                    FileUpload::make('logo')
+                    FileUpload::make('header_logo')
+                        ->label('Logo Header')
                         ->image()
                         ->disk('public')
-                        ->directory('footer-logos'),
+                        ->directory('branding')
+                        ->helperText('Logo yang akan muncul di bagian atas (Header) website'),
+                    FileUpload::make('logo')
+                        ->label('Logo Footer')
+                        ->image()
+                        ->disk('public')
+                        ->directory('branding')
+                        ->helperText('Logo yang akan muncul di bagian bawah (Footer) website'),
                     Textarea::make('description')
+                        ->label('Deskripsi Singkat')
                         ->rows(3),
-                    TextInput::make('copyright'),
+                    TextInput::make('copyright')
+                        ->label('Copyright Text'),
                 ]),
             
-            Section::make('Contact Information')
+            Section::make('Informasi Kontak')
                 ->schema([
                     TextInput::make('phone')
+                        ->label('Nomor Telepon')
                         ->tel(),
                     TextInput::make('email')
+                        ->label('Alamat Email')
                         ->email(),
                     Textarea::make('address')
+                        ->label('Alamat Kantor')
                         ->rows(3),
                 ])->columns(2),
 
-            Section::make('Social Media')
+            Section::make('Media Sosial')
                 ->schema([
                     TextInput::make('facebook'),
                     TextInput::make('instagram'),
@@ -44,7 +57,7 @@ class FooterSettingForm
                     TextInput::make('youtube'),
                 ])->columns(2),
 
-            Section::make('Links')
+            Section::make('Tautan (Links)')
                 ->schema([
                     Repeater::make('quick_links')
                         ->label('Link Cepat')

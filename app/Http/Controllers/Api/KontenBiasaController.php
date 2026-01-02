@@ -26,7 +26,7 @@ class KontenBiasaController extends Controller
      */
     public function show($id): JsonResponse
     {
-        $page = KontenBiasa::find($id);
+        $page = KontenBiasa::with(['form.fields' => fn($q) => $q->orderBy('order')])->find($id);
 
         if (!$page) {
             return response()->json([
@@ -46,7 +46,7 @@ class KontenBiasaController extends Controller
      */
     public function showByUrl($url): JsonResponse
     {
-        $page = KontenBiasa::where('url_halaman', $url)->first();
+        $page = KontenBiasa::with(['form.fields' => fn($q) => $q->orderBy('order')])->where('url_halaman', $url)->first();
 
         if (!$page) {
             return response()->json([

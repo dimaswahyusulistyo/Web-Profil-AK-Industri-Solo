@@ -44,6 +44,14 @@ class KontenBiasaForm
                 ->label('Embed URL')
                 ->nullable()
                 ->helperText('Masukkan URL embed, misal Google forms.'),
+
+            \Filament\Forms\Components\Select::make('form_id')
+                ->label('Pilih Form Dinamis (Internal)')
+                ->relationship('form', 'name')
+                ->searchable()
+                ->preload()
+                ->nullable()
+                ->helperText('Pilih jika ingin menyertakan form yang dibuat di sistem internal.'),
         ]);
     }
 }

@@ -15,8 +15,15 @@ class KontenBiasa extends Model
         'judul',
         'url_halaman',
         'konten',
-        'embed_url'
+        'embed_url',
+        'form_id'
     ];
+
+    // Relasi ke form dinamis
+    public function form()
+    {
+        return $this->belongsTo(Form::class);
+    }
 
     // Relasi ke menu
     public function menus()

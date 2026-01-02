@@ -52,7 +52,13 @@ class PengumumanController extends Controller
     public function show($id)
     {
         try {
-            $pengumuman = Pengumuman::find($id);
+            // Coba cari berdasarkan url_halaman (slug) dahulu
+            $pengumuman = Pengumuman::where('url_halaman', $id)->first();
+
+            // Jika tidak ditemukan, coba cari berdasarkan ID
+            if (!$pengumuman && is_numeric($id)) {
+                $pengumuman = Pengumuman::find($id);
+            }
 
             if (!$pengumuman) {
                 return response()->json([
@@ -83,7 +89,7 @@ class PengumumanController extends Controller
         try {
             $pengumuman = Pengumuman::orderBy('created_at', 'desc')
                 ->limit($limit)
-                ->get(['id', 'judul', 'created_at']);
+                ->get(['id', 'judul', 'url_halaman', 'created_at']);
 
             return response()->json([
                 'success' => true,

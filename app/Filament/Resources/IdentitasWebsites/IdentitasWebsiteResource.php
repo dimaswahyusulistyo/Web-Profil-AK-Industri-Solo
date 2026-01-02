@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filament\Resources\FooterSettings;
+namespace App\Filament\Resources\IdentitasWebsites;
 
-use App\Filament\Resources\FooterSettings\Pages\CreateFooterSetting;
-use App\Filament\Resources\FooterSettings\Pages\EditFooterSetting;
-use App\Filament\Resources\FooterSettings\Pages\ListFooterSettings;
+use App\Filament\Resources\IdentitasWebsites\Pages\CreateIdentitasWebsite;
+use App\Filament\Resources\IdentitasWebsites\Pages\EditIdentitasWebsite;
+use App\Filament\Resources\IdentitasWebsites\Pages\ListIdentitasWebsites;
 use App\Models\FooterSetting;
 use Filament\Schemas\Schema;
 
@@ -21,7 +21,7 @@ use Filament\Tables;
 use BackedEnum;
 use UnitEnum;
 
-class FooterSettingResource extends Resource
+class IdentitasWebsiteResource extends Resource
 {
     protected static ?string $model = FooterSetting::class;
 
@@ -30,18 +30,20 @@ class FooterSettingResource extends Resource
     protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-cog';
     protected static ?int $navigationSort = 8;
     
-    protected static ?string $navigationLabel = 'Pengaturan Footer';
+    protected static ?string $navigationLabel = 'Identitas Website';
     
-    protected static ?string $pluralModelLabel = 'Pengaturan Footer';
+    protected static ?string $pluralModelLabel = 'Identitas Website';
+    
+    protected static ?string $slug = 'identitas-website';
 
     public static function form(Schema $schema): Schema
     {
-        return \App\Filament\Resources\FooterSettings\Schemas\FooterSettingForm::configure($schema);
+        return \App\Filament\Resources\IdentitasWebsites\Schemas\IdentitasWebsiteForm::configure($schema);
     }
 
     public static function table(Table $table): Table
     {
-        return \App\Filament\Resources\FooterSettings\Tables\FooterSettingsTable::configure($table);
+        return \App\Filament\Resources\IdentitasWebsites\Tables\IdentitasWebsiteTable::configure($table);
     }
 
     public static function getRelations(): array
@@ -54,9 +56,9 @@ class FooterSettingResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListFooterSettings::route('/'),
-            'create' => CreateFooterSetting::route('/create'),
-            'edit' => EditFooterSetting::route('/{record}/edit'),
+            'index' => ListIdentitasWebsites::route('/'),
+            'create' => CreateIdentitasWebsite::route('/create'),
+            'edit' => EditIdentitasWebsite::route('/{record}/edit'),
         ];
     }
 }

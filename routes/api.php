@@ -11,7 +11,13 @@ use App\Http\Controllers\Api\MitraController;
 use App\Http\Controllers\Api\SliderController;
 use App\Http\Controllers\Api\KomentarController;
 use App\Http\Controllers\Api\FooterController;
+use App\Http\Controllers\Api\DynamicFormController;
 use Illuminate\Support\Facades\Route;
+
+Route::prefix('forms')->group(function () {
+    Route::get('/{slug}', [DynamicFormController::class, 'show']);
+    Route::post('/{slug}/submit', [DynamicFormController::class, 'submit']);
+});
 
 Route::prefix('menu')->group(function () {
     Route::get('/', [MenuController::class, 'index']);
@@ -22,7 +28,6 @@ Route::prefix('berita')->group(function () {
     Route::get('/', [BeritaController::class, 'index']);
     Route::get('/latest/{limit?}', [BeritaController::class, 'latest']);
     Route::get('/{id}', [BeritaController::class, 'show']);
-    Route::get('/url/{url}', [BeritaController::class, 'showByUrl']);
     Route::get('/kategori/all', [BeritaController::class, 'kategori']);
 });
 
