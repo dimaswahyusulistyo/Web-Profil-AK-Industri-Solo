@@ -13,7 +13,8 @@ class FooterSettingsTable
     {
         return $table
             ->columns([
-                ImageColumn::make('logo'),
+                ImageColumn::make('logo')
+                    ->disk('public'),
                 TextColumn::make('description')->limit(50),
                 TextColumn::make('copyright'),
             ])

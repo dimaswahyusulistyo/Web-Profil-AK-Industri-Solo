@@ -18,6 +18,7 @@ class FooterSettingForm
                 ->schema([
                     FileUpload::make('logo')
                         ->image()
+                        ->disk('public')
                         ->directory('footer-logos'),
                     Textarea::make('description')
                         ->rows(3),

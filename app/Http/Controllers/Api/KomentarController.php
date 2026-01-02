@@ -37,6 +37,10 @@ class KomentarController extends Controller
         return response()->json([
             'data' => $model->komentar()
                 ->where('is_approved', true)
+                ->whereNull('parent_id')
+                ->with(['replies' => function($query) {
+                    $query->where('is_approved', true)->latest();
+                }])
                 ->latest()
                 ->get(),
         ]);
@@ -53,6 +57,7 @@ class KomentarController extends Controller
             'nama'         => 'required|string|max:100',
             'email'        => 'required|email',
             'isi_komentar' => 'required|string',
+            'parent_id'    => 'nullable|exists:komentar,id',
         ]);
 
         $model = $this->resolveCommentable($request->type, $request->id);
@@ -61,11 +66,12 @@ class KomentarController extends Controller
             'nama'         => $request->nama,
             'email'        => $request->email,
             'isi_komentar' => $request->isi_komentar,
-            'is_approved'  => false,
+            'parent_id'    => $request->parent_id,
+            'is_approved'  => true,
         ]);
 
         return response()->json([
-            'message' => 'Komentar berhasil dikirim dan menunggu moderasi',
+            'message' => 'Komentar berhasil dikirim',
             'data'    => $komentar,
         ], 201);
     }

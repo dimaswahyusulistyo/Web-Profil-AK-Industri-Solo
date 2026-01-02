@@ -18,7 +18,10 @@ class AspirasiAduanController extends Controller
         $validator = Validator::make($request->all(), [
             'nama' => 'required|string|max:255',
             'email' => 'required|email|max:255',
+            'no_telp' => 'required|string|max:20',
+            'kategori_aduan_id' => 'required|exists:kategori_aduans,id',
             'pesan' => 'required|string',
+            'data_dukung' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:5120',
         ]);
 
         if ($validator->fails()) {
@@ -29,16 +32,24 @@ class AspirasiAduanController extends Controller
             ], 422);
         }
 
-        $aspirasi = AspirasiAduan::create([
+        $data = [
             'nama' => $request->nama,
             'email' => $request->email,
+            'no_telp' => $request->no_telp,
+            'kategori_aduan_id' => $request->kategori_aduan_id,
             'pesan' => $request->pesan,
-        ]);
+        ];
+
+        if ($request->hasFile('data_dukung')) {
+            $data['data_dukung'] = $request->file('data_dukung')->store('aspirasi-dukung', 'public');
+        }
+
+        $aspirasi = AspirasiAduan::create($data);
 
         return response()->json([
             'success' => true,
             'message' => 'Aspirasi/Aduan berhasil dikirim',
-            'data' => $aspirasi
+            'data' => $aspirasi->load('kategori')
         ], 201);
     }
 

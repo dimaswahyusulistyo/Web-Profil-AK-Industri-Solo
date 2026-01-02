@@ -32,6 +32,14 @@ class AspirasiAduanForm
                     ->label('Isi Pengaduan')
                     ->required()
                     ->columnSpanFull(),
+                \Filament\Forms\Components\FileUpload::make('data_dukung')
+                    ->label('Data Dukung')
+                    ->helperText('Format yang didukung: PDF, DOC, DOCX, JPG, JPEG, PNG (Maks. 5MB)')
+                    ->disk('public')
+                    ->directory('aspirasi-dukung')
+                    ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/png'])
+                    ->maxSize(5120)
+                    ->columnSpanFull(),
                 Textarea::make('tanggapan')
                     ->default(null)
                     ->columnSpanFull(),

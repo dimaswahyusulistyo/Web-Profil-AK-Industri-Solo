@@ -17,6 +17,7 @@ class Komentar extends Model
         'isi_komentar',
         'commentable_type',
         'commentable_id',
+        'parent_id',
         'tanggapan',
         'is_approved'
     ];
@@ -29,5 +30,17 @@ class Komentar extends Model
     public function commentable()
     {
         return $this->morphTo();
+    }
+
+    // Relasi ke induk komentar
+    public function parent()
+    {
+        return $this->belongsTo(Komentar::class, 'parent_id');
+    }
+
+    // Relasi ke anak komentar (balasan)
+    public function replies()
+    {
+        return $this->hasMany(Komentar::class, 'parent_id');
     }
 }

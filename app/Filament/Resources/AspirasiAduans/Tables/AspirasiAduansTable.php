@@ -27,6 +27,15 @@ class AspirasiAduansTable
                     ->label('Kategori')
                     ->badge()
                     ->searchable(),
+                // \Filament\Tables\Columns\ImageColumn::make('data_dukung')
+                //     ->label('Pratinjau')
+                //     ->disk('public')
+                //     ->visibility('public')
+                //     ->width(100)
+                //     ->height(100)
+                //     ->square()
+                //     ->url(fn ($record) => $record->data_dukung ? asset('storage/' . $record->data_dukung) : null)
+                //     ->openUrlInNewTab(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

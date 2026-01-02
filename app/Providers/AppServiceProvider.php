@@ -15,6 +15,7 @@ use App\Models\Menu;
 use App\Models\Mitra;
 use App\Models\Komentar;
 use App\Models\AspirasiAduan;
+use App\Models\KategoriAduan;
 use App\Models\KontenBiasa;
 use App\Models\Berita;
 use App\Models\KategoriBerita;
@@ -46,6 +47,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Mitra::class, RestrictedPolicy::class);
         Gate::policy(Komentar::class, RestrictedPolicy::class);
         Gate::policy(AspirasiAduan::class, RestrictedPolicy::class);
+        Gate::policy(KategoriAduan::class, RestrictedPolicy::class);
         Gate::policy(KontenBiasa::class, RestrictedPolicy::class);
 
         Gate::policy(Berita::class, BeritaPolicy::class);

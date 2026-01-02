@@ -17,6 +17,7 @@ class AspirasiAduan extends Model
         'no_telp',
         'kategori_aduan_id',
         'pesan',
+        'data_dukung',
         'tanggapan'
     ];
 

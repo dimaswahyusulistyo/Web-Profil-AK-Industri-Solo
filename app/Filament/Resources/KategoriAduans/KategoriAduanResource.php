@@ -20,6 +20,11 @@ class KategoriAduanResource extends Resource
     protected static UnitEnum|string|null $navigationGroup = 'Komentar & Aspirasi';
     protected static ?int $navigationSort = 3;
 
+    public static function getPluralModelLabel(): string
+    {
+        return 'Daftar Kategori Aduan';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return $schema

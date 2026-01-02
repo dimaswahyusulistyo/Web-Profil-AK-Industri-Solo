@@ -3,12 +3,14 @@
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\KontenBiasaController;
 use App\Http\Controllers\Api\AspirasiAduanController;
+use App\Http\Controllers\Api\KategoriAduanController;
 use App\Http\Controllers\Api\BeritaController;
 use App\Http\Controllers\Api\PengumumanController;
 use App\Http\Controllers\Api\LayananController;
 use App\Http\Controllers\Api\MitraController;
 use App\Http\Controllers\Api\SliderController;
 use App\Http\Controllers\Api\KomentarController;
+use App\Http\Controllers\Api\FooterController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('menu')->group(function () {
@@ -52,6 +54,7 @@ Route::prefix('mitra')->group(function () {
 });
 
 Route::prefix('aspirasi-aduan')->group(function () {
+    Route::get('/kategori', [KategoriAduanController::class, 'index']);
     Route::post('/', [AspirasiAduanController::class, 'store']);
     Route::post('/track', [AspirasiAduanController::class, 'getByEmail']);
 });
@@ -59,5 +62,9 @@ Route::prefix('aspirasi-aduan')->group(function () {
 Route::prefix('pages')->group(function () {
     Route::get('/', [KontenBiasaController::class, 'index']);
     Route::get('/{id}', [KontenBiasaController::class, 'show']);
-    Route::get('/url/{url}', [KontenBiasaController::class, 'showByUrl']);
+Route::get('/url/{url}', [KontenBiasaController::class, 'showByUrl']);
+});
+
+Route::prefix('footer')->group(function () {
+    Route::get('/', FooterController::class);
 });

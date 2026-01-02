@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('aspirasi_aduan', function (Blueprint $table) {
-            $table->string('no_telp')->after('email')->nullable();
-            $table->foreignId('kategori_aduan_id')->after('no_telp')->nullable()->constrained('kategori_aduans')->nullOnDelete();
+            if (!Schema::hasColumn('aspirasi_aduan', 'no_telp')) {
+                $table->string('no_telp')->after('email');
+            }
+            if (!Schema::hasColumn('aspirasi_aduan', 'kategori_aduan_id')) {
+                $table->foreignId('kategori_aduan_id')->after('no_telp')->constrained('kategori_aduans');
+            }
         });
     }
 
@@ -23,7 +27,13 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('aspirasi_aduan', function (Blueprint $table) {
-            //
+            if (Schema::hasColumn('aspirasi_aduan', 'no_telp')) {
+                $table->dropColumn('no_telp');
+            }
+            if (Schema::hasColumn('aspirasi_aduan', 'kategori_aduan_id')) {
+                $table->dropForeign(['kategori_aduan_id']);
+                $table->dropColumn('kategori_aduan_id');
+            }
         });
     }
 };

@@ -32,10 +32,16 @@ class KomentarForm
                     ->required()
                     ->numeric()
                     ->disabled(),
+                TextInput::make('parent_id')
+                    ->label('ID Komentar Induk')
+                    ->numeric()
+                    ->disabled(),
                 Textarea::make('tanggapan')
                     ->default(null)
                     ->columnSpanFull(),
                 Toggle::make('is_approved')
+                    ->label('Approved')
+                    ->default(true)
                     ->required(),
             ]);
     }
