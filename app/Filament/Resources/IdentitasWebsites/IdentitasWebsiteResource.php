@@ -30,11 +30,11 @@ class IdentitasWebsiteResource extends Resource
     protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-cog';
     protected static ?int $navigationSort = 8;
     
-    protected static ?string $navigationLabel = 'Identitas Website';
+    protected static ?string $navigationLabel = 'Global Settings';
     
-    protected static ?string $pluralModelLabel = 'Identitas Website';
+    protected static ?string $pluralModelLabel = 'Global Settings';
     
-    protected static ?string $slug = 'identitas-website';
+    protected static ?string $slug = 'global-settings';
 
     public static function form(Schema $schema): Schema
     {

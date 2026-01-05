@@ -20,6 +20,7 @@ use UnitEnum;
 class AspirasiAduanResource extends Resource
 {
     protected static ?string $model = AspirasiAduan::class;
+    protected static bool $shouldRegisterNavigation = false;
     protected static UnitEnum|string|null $navigationGroup = 'Komentar & Aspirasi';
 
     protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-clipboard-document';

@@ -20,7 +20,9 @@ class FormSubmissionInfolist
                         TextEntry::make('created_at')
                             ->label('Waktu Pengiriman')
                             ->dateTime(),
-                    ])->columns(2),
+                    ])
+                    ->columns(2)
+                    ->columnSpanFull(),
 
                 Section::make('Data Input')
                     ->schema([
@@ -28,6 +30,7 @@ class FormSubmissionInfolist
                             ->label('Isi Form')
                             ->view('filament.components.submission-data-viewer')
                     ])
+                    ->columnSpanFull()
             ]);
     }
 }

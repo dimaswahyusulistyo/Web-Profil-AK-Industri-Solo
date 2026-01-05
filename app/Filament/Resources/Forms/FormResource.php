@@ -17,7 +17,7 @@ class FormResource extends Resource
 {
     protected static ?string $model = Form::class;
 
-    protected static UnitEnum|string|null $navigationGroup = 'Form Dinamis';
+    protected static UnitEnum|string|null $navigationGroup = 'Management Form';
 
     protected static string|BackedEnum|null $navigationIcon =
         Heroicon::OutlinedClipboardDocumentCheck;
@@ -26,7 +26,7 @@ class FormResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Daftar Form Dinamis';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Schema $schema): Schema
     {

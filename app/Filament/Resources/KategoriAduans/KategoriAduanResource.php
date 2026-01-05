@@ -15,6 +15,7 @@ use UnitEnum;
 class KategoriAduanResource extends Resource
 {
     protected static ?string $model = KategoriAduan::class;
+    protected static bool $shouldRegisterNavigation = false;
 
     protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-tag';
     protected static UnitEnum|string|null $navigationGroup = 'Komentar & Aspirasi';

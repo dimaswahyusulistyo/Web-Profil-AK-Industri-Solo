@@ -19,11 +19,13 @@ class FooterSetting extends Model
         'youtube',
         'quick_links',
         'related_links',
+        'comments_enabled',
         'copyright',
     ];
 
     protected $casts = [
         'quick_links' => 'array',
         'related_links' => 'array',
+        'comments_enabled' => 'boolean',
     ];
 }

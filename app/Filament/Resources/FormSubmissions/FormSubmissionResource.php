@@ -17,6 +17,9 @@ class FormSubmissionResource extends Resource
 {
     protected static ?string $model = FormSubmission::class;
 
+    // Hide from navigation since we'll use dynamic navigation items
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static UnitEnum|string|null $navigationGroup = 'Form Dinamis';
 
     protected static string|BackedEnum|null $navigationIcon =
@@ -40,11 +43,23 @@ class FormSubmissionResource extends Resource
                     ->dateTime()
                     ->sortable(),
             ])
+            ->filters([
+                \Filament\Tables\Filters\SelectFilter::make('form_id')
+                    ->relationship('form', 'name')
+                    ->label('Filter Form')
+                    ->preload(),
+            ])
             ->defaultSort('created_at', 'desc')
             ->actions([
                 \Filament\Actions\ViewAction::make(),
                 \Filament\Actions\DeleteAction::make(),
-            ]);
+            ])
+            ->modifyQueryUsing(function ($query) {
+                // Auto-filter by form_id from URL parameter
+                if (request()->has('tableFilters') && isset(request('tableFilters')['form_id']['value'])) {
+                    $query->where('form_id', request('tableFilters')['form_id']['value']);
+                }
+            });
     }
 
     public static function infolist(Schema $schema): Schema

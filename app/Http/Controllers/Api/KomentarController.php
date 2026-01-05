@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Komentar;
 use App\Models\Berita;
 use App\Models\Pengumuman;
+use App\Models\FooterSetting;
 use Illuminate\Http\Request;
 
 class KomentarController extends Controller
@@ -34,6 +35,12 @@ class KomentarController extends Controller
 
         $model = $this->resolveCommentable($request->type, $request->id);
 
+        // global comments switch
+        $settings = FooterSetting::first();
+        if ($settings && $settings->comments_enabled === false) {
+            return response()->json([ 'data' => [] ]);
+        }
+
         return response()->json([
             'data' => $model->komentar()
                 ->where('is_approved', true)
@@ -59,6 +66,12 @@ class KomentarController extends Controller
             'isi_komentar' => 'required|string',
             'parent_id'    => 'nullable|exists:komentar,id',
         ]);
+
+        // check global switch before creating
+        $settings = FooterSetting::first();
+        if ($settings && $settings->comments_enabled === false) {
+            return response()->json([ 'message' => 'Komentar dinonaktifkan' ], 403);
+        }
 
         $model = $this->resolveCommentable($request->type, $request->id);
 
