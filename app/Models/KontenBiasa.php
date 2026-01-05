@@ -16,7 +16,9 @@ class KontenBiasa extends Model
         'url_halaman',
         'konten',
         'embed_url',
-        'form_id'
+        'form_id',
+        'button_text',
+        'button_url'
     ];
 
     // Relasi ke form dinamis

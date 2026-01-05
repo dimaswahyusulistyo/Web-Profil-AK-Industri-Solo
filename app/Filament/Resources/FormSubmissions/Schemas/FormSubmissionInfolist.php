@@ -11,26 +11,54 @@ class FormSubmissionInfolist
 {
     public static function configure(Schema $schema): Schema
     {
-        return $schema
-            ->components([
-                Section::make('Detail Submission')
-                    ->schema([
-                        TextEntry::make('form.name')
-                            ->label('Nama Form'),
-                        TextEntry::make('created_at')
-                            ->label('Waktu Pengiriman')
-                            ->dateTime(),
-                    ])
-                    ->columns(2)
-                    ->columnSpanFull(),
+        return $schema->schema(function ($record) {
+            $components = [];
 
-                Section::make('Data Input')
-                    ->schema([
-                        ViewEntry::make('data')
-                            ->label('Isi Form')
-                            ->view('filament.components.submission-data-viewer')
-                    ])
-                    ->columnSpanFull()
-            ]);
+            $components[] = Section::make('Informasi Submission')
+                ->schema([
+                    TextEntry::make('form.name')
+                        ->label('Nama Form')
+                        ->columnSpan(1),
+
+                    TextEntry::make('created_at')
+                        ->label('Waktu Pengiriman')
+                        ->dateTime()
+                        ->columnSpan(1),
+                ])
+                ->columns(2)
+                ->columnSpanFull();
+
+
+            if ($record && $record->data) {
+                foreach ($record->data as $label => $value) {
+                    if ($value === null || $value === '') continue;
+
+                    $isUpload = is_string($value) && \Illuminate\Support\Str::startsWith($value, 'dynamic-form-uploads/');
+
+                    if ($isUpload) {
+                        $components[] = Section::make($label)
+                            ->schema([
+                                ViewEntry::make("data_view_{$label}")
+                                    ->label('')
+                                    ->view('filament.components.data-dukung-preview')
+                                    ->state($value)
+                                    ->columnSpanFull()
+                            ])
+                            ->columnSpanFull();
+                    } else {
+                        $components[] = Section::make($label)
+                            ->schema([
+                                TextEntry::make("data_text_{$label}")
+                                    ->label('')
+                                    ->state(fn() => is_array($value) ? implode(', ', $value) : $value)
+                                    ->columnSpanFull()
+                            ])
+                            ->columnSpanFull();
+                    }
+                }
+            }
+
+            return $components;
+        });
     }
 }

@@ -17,4 +17,22 @@ class ListMenus extends ListRecords
             CreateAction::make(),
         ];
     }
+
+    public function getTableQuery(): ?\Illuminate\Database\Eloquent\Builder
+    {
+        $ids = \App\Models\Menu::getTreeSortedIds();
+        
+        $query = parent::getTableQuery();
+
+        if (!empty($ids)) {
+            $query->orderByRaw("FIELD(id, " . implode(',', $ids) . ")");
+        }
+
+        return $query;
+    }
+
+    protected function isTablePaginationEnabled(): bool
+    {
+        return false;
+    }
 }

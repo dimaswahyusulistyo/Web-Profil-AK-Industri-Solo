@@ -24,17 +24,38 @@ class MenuForm
 
                     Select::make('parent_id')
                         ->label('Parent Menu')
-                        ->relationship('parent', 'nama_menu')
+                        ->options(function ($record) {
+                            $query = \App\Models\Menu::query();
+                            if ($record) {
+                                $query->where('id', '!=', $record->id);
+                            }
+                            
+                            // Ambil semua menu dan urutkan secara hierarki
+                            $sortedIds = \App\Models\Menu::getTreeSortedIds();
+                            $menus = \App\Models\Menu::when(!empty($sortedIds), function ($q) use ($sortedIds) {
+                                $q->orderByRaw("FIELD(id, " . implode(',', $sortedIds) . ")");
+                            })->get();
+
+                            return $menus->mapWithKeys(function ($menu) {
+                                $depth = $menu->getDepth();
+                                $prefix = $depth > 0 ? '|' . str_repeat('-', $depth) . ' ' : '';
+                                $icon = $menu->menu_type === 'group' ? '📁' : '📄';
+                                
+                                return [$menu->id => $prefix . $icon . ' ' . $menu->nama_menu];
+                            });
+                        })
                         ->searchable()
                         ->preload()
                         ->nullable()
-                        ->helperText('Kosongkan jika menu utama'),
+                        ->helperText('Kosongkan jika menu merupakan menu utama (Top Level)')
+                        ->columnSpanFull(),
 
                     TextInput::make('urutan')
                         ->label('Urutan')
                         ->numeric()
                         ->default(0)
-                        ->helperText('Semakin kecil semakin di atas'),
+                        ->helperText('Semakin kecil semakin di atas')
+                        ->columnSpanFull(),
 
                     Radio::make('menu_type')
                         ->label('Tipe Menu')
@@ -54,8 +75,7 @@ class MenuForm
                         })
                         ->helperText('Group: menu induk tanpa tujuan | Link: menu dengan tujuan halaman')
                         ->columnSpanFull(),
-                ])
-                ->columns(2),
+                ]),
 
             Section::make('Tujuan Menu')
                 ->schema([

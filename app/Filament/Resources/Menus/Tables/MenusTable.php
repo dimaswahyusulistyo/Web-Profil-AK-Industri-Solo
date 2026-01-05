@@ -19,8 +19,17 @@ class MenusTable
 
                 TextColumn::make('nama_menu')
                     ->label('Menu')
-                    ->searchable()
-                    ->sortable(),
+                    ->html()
+                    ->formatStateUsing(function ($state, $record) {
+                        $depth = $record->getDepth();
+                        $prefix = '';
+                        if ($depth > 0) {
+                            $prefix = '<span class="text-gray-500 font-mono">' . str_repeat('│&nbsp;&nbsp;', $depth - 1) . '└─&nbsp;</span>';
+                        }
+                        $icon = $record->menu_type === 'group' ? '📁' : '📄';
+                        return $prefix . $icon . ' ' . $state;
+                    })
+                    ->searchable(),
 
                 TextColumn::make('menu_type')
                     ->label('Tipe')
@@ -31,17 +40,16 @@ class MenusTable
                     }),
 
                 TextColumn::make('parent.nama_menu')
-                    ->label('Parent')
+                    ->label('Induk Path')
+                    ->formatStateUsing(fn ($record) => $record->getParentPath())
                     ->placeholder('-'),
 
                 TextColumn::make('link_type')
                     ->label('Tipe Layout')
                     ->badge(),
 
-                TextColumn::make('urutan')
-                    ->sortable(),
+                TextColumn::make('urutan'),
             ])
-            ->defaultSort('urutan')
             ->filters([
                 
             ])

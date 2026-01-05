@@ -17,7 +17,7 @@ class KontenBiasaForm
             TextInput::make('judul')
                 ->label('Judul')
                 ->required()
-                ->live(debounce: 300)
+                ->live(onBlur: true)
                 ->afterStateUpdated(function ($state, $set, $get) {
                     if (! $get('slug_manual')) {
                         $set('url_halaman', str($state)->slug());
@@ -52,6 +52,19 @@ class KontenBiasaForm
                 ->preload()
                 ->nullable()
                 ->helperText('Pilih jika ingin menyertakan form yang dibuat di sistem internal.'),
+
+            \Filament\Schemas\Components\Section::make('Link Button (Opsional)')
+                ->description('Tambahkan tombol klik jika halaman ini merujuk ke link luar atau internal tertentu.')
+                ->schema([
+                    TextInput::make('button_text')
+                        ->label('Teks Tombol')
+                        ->placeholder('Contoh: Unduh Berkas'),
+                    TextInput::make('button_url')
+                        ->label('Link Terkait / URL Button')
+                        ->placeholder('Contoh: https://example.com')
+                        ->url(),
+                ])
+                ->columns(2),
         ]);
     }
 }

@@ -32,4 +32,40 @@ class Menu extends Model
     {
         return $this->belongsTo(KontenBiasa::class, 'page_id');
     }
+
+    public function getDepth(): int
+    {
+        $depth = 0;
+        $parent = $this->parent;
+
+        while ($parent) {
+            $depth++;
+            $parent = $parent->parent;
+        }
+
+        return $depth;
+    }
+
+    public function getParentPath(): string
+    {
+        $path = [];
+        $parent = $this->parent;
+
+        while ($parent) {
+            array_unshift($path, $parent->nama_menu);
+            $parent = $parent->parent;
+        }
+
+        return implode(' → ', $path);
+    }
+
+    public static function getTreeSortedIds($parentId = null, &$ids = [])
+    {
+        $items = self::where('parent_id', $parentId)->orderBy('urutan')->get();
+        foreach ($items as $item) {
+            $ids[] = $item->id;
+            self::getTreeSortedIds($item->id, $ids);
+        }
+        return $ids;
+    }
 }

@@ -15,7 +15,9 @@ class Pengumuman extends Model
         'judul',
         'url_halaman',
         'thumbnail',
-        'konten'
+        'konten',
+        'button_text',
+        'button_url'
     ];
 
     // Relasi ke komentar

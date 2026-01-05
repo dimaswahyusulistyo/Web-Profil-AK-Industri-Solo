@@ -45,6 +45,19 @@ class PengumumanForm
                 ->fileAttachmentsDisk('public')
                 ->fileAttachmentsDirectory('pengumuman')
                 ->fileAttachmentsVisibility('public'),
+
+            \Filament\Schemas\Components\Section::make('Link Button (Opsional)')
+                ->description('Tambahkan tombol klik jika pengumuman ini merujuk ke link luar atau internal tertentu.')
+                ->schema([
+                    TextInput::make('button_text')
+                        ->label('Teks Tombol')
+                        ->placeholder('Contoh: Lihat Selengkapnya'),
+                    TextInput::make('button_url')
+                        ->label('Link Terkait / URL Button')
+                        ->placeholder('Contoh: https://google.com')
+                        ->url(),
+                ])
+                ->columns(2),
         ]);
     }
 }
