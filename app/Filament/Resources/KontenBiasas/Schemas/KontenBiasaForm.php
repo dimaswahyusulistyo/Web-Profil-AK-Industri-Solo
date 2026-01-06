@@ -40,10 +40,16 @@ class KontenBiasaForm
                 ->dehydrated() 
                 ->nullable(),
 
-            TextInput::make('embed_url')
-                ->label('Embed URL')
-                ->nullable()
-                ->helperText('Masukkan URL embed, misal Google forms.'),
+            \Filament\Forms\Components\Repeater::make('embeds')
+                ->label('Embeds (Google Maps / Youtube / Forms)')
+                ->schema([
+                    TextInput::make('url')
+                        ->label('URL Embed')
+                        ->required(),
+                    TextInput::make('description')
+                        ->label('Keterangan (Opsional)'),
+                ])
+                ->columnSpanFull(),
 
             \Filament\Forms\Components\Select::make('form_id')
                 ->label('Pilih Form Dinamis (Internal)')
@@ -53,18 +59,35 @@ class KontenBiasaForm
                 ->nullable()
                 ->helperText('Pilih jika ingin menyertakan form yang dibuat di sistem internal.'),
 
-            \Filament\Schemas\Components\Section::make('Link Button (Opsional)')
-                ->description('Tambahkan tombol klik jika halaman ini merujuk ke link luar atau internal tertentu.')
+            \Filament\Schemas\Components\Section::make('Link Buttons')
+                ->description('Tambahkan tombol link yang relevan.')
                 ->schema([
-                    TextInput::make('button_text')
-                        ->label('Teks Tombol')
-                        ->placeholder('Contoh: Unduh Berkas'),
-                    TextInput::make('button_url')
-                        ->label('Link Terkait / URL Button')
-                        ->placeholder('Contoh: https://example.com')
-                        ->url(),
+                    \Filament\Forms\Components\Repeater::make('buttons')
+                        ->label('Daftar Tombol')
+                        ->schema([
+                            TextInput::make('text')
+                                ->label('Teks Tombol')
+                                ->placeholder('Contoh: Unduh Berkas')
+                                ->required(),
+                            TextInput::make('url')
+                                ->label('Link Tujuan')
+                                ->placeholder('https://...')
+                                ->url()
+                                ->required(),
+                            \Filament\Forms\Components\Select::make('color')
+                                ->label('Warna Tombol')
+                                ->options([
+                                    'primary' => 'Utama (Biru)',
+                                    'secondary' => 'Sekunder (Abu-abu)',
+                                    'success' => 'Sukses (Hijau)',
+                                    'danger' => 'Bahaya (Merah)',
+                                    'warning' => 'Peringatan (Kuning)',
+                                ])
+                                ->default('primary'),
+                        ])
+                        ->grid(2)
+                        ->columnSpanFull(),
                 ])
-                ->columns(2),
         ]);
     }
 }

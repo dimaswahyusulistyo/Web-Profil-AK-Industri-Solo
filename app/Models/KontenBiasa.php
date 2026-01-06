@@ -15,19 +15,21 @@ class KontenBiasa extends Model
         'judul',
         'url_halaman',
         'konten',
-        'embed_url',
+        'embeds',
         'form_id',
-        'button_text',
-        'button_url'
+        'buttons'
     ];
 
-    // Relasi ke form dinamis
+    protected $casts = [
+        'embeds' => 'array',
+        'buttons' => 'array',
+    ];
+
     public function form()
     {
         return $this->belongsTo(Form::class);
     }
 
-    // Relasi ke menu
     public function menus()
     {
         return $this->hasMany(Menu::class, 'page_id');

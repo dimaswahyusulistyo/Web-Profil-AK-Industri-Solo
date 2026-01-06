@@ -35,7 +35,6 @@ class KomentarController extends Controller
 
         $model = $this->resolveCommentable($request->type, $request->id);
 
-        // global comments switch
         $settings = FooterSetting::first();
         if ($settings && $settings->comments_enabled === false) {
             return response()->json([ 'data' => [] ]);
@@ -67,7 +66,6 @@ class KomentarController extends Controller
             'parent_id'    => 'nullable|exists:komentar,id',
         ]);
 
-        // check global switch before creating
         $settings = FooterSetting::first();
         if ($settings && $settings->comments_enabled === false) {
             return response()->json([ 'message' => 'Komentar dinonaktifkan' ], 403);

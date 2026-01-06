@@ -18,13 +18,11 @@ class Berita extends Model
         'thumbnail'
     ];
 
-    // Relasi ke kategori
     public function kategori()
     {
         return $this->belongsTo(KategoriBerita::class, 'kategori_id');
     }
 
-    // Relasi ke komentar
     public function komentar()
     {
         return $this->morphMany(Komentar::class, 'commentable');

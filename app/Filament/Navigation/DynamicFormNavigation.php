@@ -12,7 +12,6 @@ class DynamicFormNavigation
     {
         $items = [];
         
-        // Get all active forms
         $forms = Form::where('is_active', true)
             ->orderBy('name')
             ->get();
@@ -23,7 +22,6 @@ class DynamicFormNavigation
         $isAdmin = $user->roles()->where('nama_role', 'Admin')->exists();
 
         foreach ($forms as $form) {
-            // Check if user has permission for this specific form
             if (!$isAdmin && !$user->hasPermission("form.{$form->id}")) {
                 continue;
             }

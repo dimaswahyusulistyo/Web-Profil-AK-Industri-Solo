@@ -15,7 +15,6 @@ class FooterController extends Controller
     {
         $footer = FooterSetting::first();
 
-        // If no footer setting exists, return default or empty structure
         if (!$footer) {
             return response()->json([
                 'success' => true,
@@ -24,8 +23,6 @@ class FooterController extends Controller
             ]);
         }
 
-        // Return the footer data directly
-        // The quick_links and related_links are already cast to array in the model
         return response()->json([
             'success' => true,
             'message' => 'Footer settings retrieved successfully',

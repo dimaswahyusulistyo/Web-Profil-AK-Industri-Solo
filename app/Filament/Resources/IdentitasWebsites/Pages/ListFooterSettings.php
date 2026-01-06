@@ -13,7 +13,6 @@ class ListFooterSettings extends ListRecords
 
     protected function getHeaderActions(): array
     {
-        // Only allow creating if no record exists
         if (FooterSetting::count() > 0) {
             return [];
         }

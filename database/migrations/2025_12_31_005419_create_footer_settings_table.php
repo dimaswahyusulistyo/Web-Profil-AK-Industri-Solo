@@ -21,11 +21,11 @@ return new class extends Migration
             
             $table->string('facebook')->nullable();
             $table->string('instagram')->nullable();
-            $table->string('twitter')->nullable(); // or x
+            $table->string('twitter')->nullable();
             $table->string('youtube')->nullable();
 
-            $table->json('quick_links')->nullable(); // Array of {label, url}
-            $table->json('related_links')->nullable(); // Array of {label, url}
+            $table->json('quick_links')->nullable();
+            $table->json('related_links')->nullable();
             
             $table->string('copyright')->nullable();
 

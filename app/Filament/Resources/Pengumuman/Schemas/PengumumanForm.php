@@ -46,18 +46,35 @@ class PengumumanForm
                 ->fileAttachmentsDirectory('pengumuman')
                 ->fileAttachmentsVisibility('public'),
 
-            \Filament\Schemas\Components\Section::make('Link Button (Opsional)')
-                ->description('Tambahkan tombol klik jika pengumuman ini merujuk ke link luar atau internal tertentu.')
+            \Filament\Schemas\Components\Section::make('Link Buttons')
+                ->description('Tambahkan tombol link jika pengumuman ini merujuk ke link luar atau internal tertentu.')
                 ->schema([
-                    TextInput::make('button_text')
-                        ->label('Teks Tombol')
-                        ->placeholder('Contoh: Lihat Selengkapnya'),
-                    TextInput::make('button_url')
-                        ->label('Link Terkait / URL Button')
-                        ->placeholder('Contoh: https://google.com')
-                        ->url(),
+                    \Filament\Forms\Components\Repeater::make('buttons')
+                        ->label('Daftar Tombol')
+                        ->schema([
+                            TextInput::make('text')
+                                ->label('Teks Tombol')
+                                ->placeholder('Contoh: Lihat Selengkapnya')
+                                ->required(),
+                            TextInput::make('url')
+                                ->label('Link Tujuan')
+                                ->placeholder('https://...')
+                                ->url()
+                                ->required(),
+                            \Filament\Forms\Components\Select::make('color')
+                                ->label('Warna Tombol')
+                                ->options([
+                                    'primary' => 'Utama (Biru)',
+                                    'secondary' => 'Sekunder (Abu-abu)',
+                                    'success' => 'Sukses (Hijau)',
+                                    'danger' => 'Bahaya (Merah)',
+                                    'warning' => 'Peringatan (Kuning)',
+                                ])
+                                ->default('primary'),
+                        ])
+                        ->grid(2)
+                        ->columnSpanFull(),
                 ])
-                ->columns(2),
         ]);
     }
 }

@@ -35,7 +35,6 @@ class FormSubmissionInfolist
                 foreach ($record->data as $label => $value) {
                     if ($value === null || $value === '') continue;
 
-                    // Resolve selection values to labels if possible
                     $displayValue = $value;
                     $field = $formFields->firstWhere('label', $label) ?? $formFields->firstWhere('name', $label);
 

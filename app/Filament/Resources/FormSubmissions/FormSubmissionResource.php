@@ -33,14 +33,10 @@ class FormSubmissionResource extends Resource
         $user = auth()->user();
         if (!$user) return false;
 
-        // Admin has full access
         if ($user->roles()->where('nama_role', 'Admin')->exists()) {
             return true;
         }
 
-        // Check if user has at least one dynamic form permission
-        // We check the permissions array for any key starting with "form."
-        // Or if they have a general resource permission
         return $user->roles()
             ->where(function($query) {
                 $query->whereJsonContains('permissions', 'resource.FormSubmission')
@@ -48,7 +44,6 @@ class FormSubmissionResource extends Resource
             })->exists();
     }
 
-    // Hide from navigation since we'll use dynamic navigation items
     protected static bool $shouldRegisterNavigation = false;
 
     protected static UnitEnum|string|null $navigationGroup = 'Form Dinamis';
@@ -106,7 +101,6 @@ class FormSubmissionResource extends Resource
                             return null;
                         }
 
-                        // Get unique keys from JSON data
                         $headers = collect();
                         foreach ($records as $record) {
                             if (isset($record->data) && is_array($record->data)) {
@@ -121,7 +115,6 @@ class FormSubmissionResource extends Resource
                             $callback = function() use ($records, $headers) {
                                 $file = fopen('php://output', 'w');
                                 
-                                // Clean headers
                                 $cleanHeaders = array_map(fn($h) => ucwords(str_replace('_', ' ', $h)), $headers);
                                 fputcsv($file, array_merge(['ID', 'Waktu'], $cleanHeaders));
 
@@ -240,7 +233,6 @@ class FormSubmissionResource extends Resource
                 ]),
             ])
             ->modifyQueryUsing(function ($query) {
-                // Auto-filter by form_id from URL parameter
                 if (request()->has('tableFilters') && isset(request('tableFilters')['form_id']['value'])) {
                     $query->where('form_id', request('tableFilters')['form_id']['value']);
                 }

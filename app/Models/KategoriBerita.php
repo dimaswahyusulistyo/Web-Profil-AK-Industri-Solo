@@ -16,7 +16,6 @@ class KategoriBerita extends Model
         'url_halaman'
     ];
 
-    // Relasi ke berita
     public function berita()
     {
         return $this->hasMany(Berita::class, 'kategori_id');

@@ -60,7 +60,6 @@ class DynamicFormController extends Controller
                 ], 404);
             }
 
-            // Build dynamic validation
             $rules = [];
             foreach ($form->fields as $field) {
                 $fieldRules = [];
@@ -72,7 +71,7 @@ class DynamicFormController extends Controller
 
                 if ($field->type === 'file') {
                     $fieldRules[] = 'file';
-                    $fieldRules[] = 'max:10240'; // 10MB
+                    $fieldRules[] = 'max:10240';
                 }
 
                 $rules[$field->name] = implode('|', $fieldRules);
@@ -88,7 +87,6 @@ class DynamicFormController extends Controller
                 ], 422);
             }
 
-            // Process data and handle file uploads
             $submittedData = [];
             foreach ($form->fields as $field) {
                 if ($field->type === 'file' && $request->hasFile($field->name)) {
@@ -99,7 +97,6 @@ class DynamicFormController extends Controller
                 }
             }
 
-            // Save submission
             FormSubmission::create([
                 'form_id' => $form->id,
                 'data' => $submittedData

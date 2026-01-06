@@ -47,7 +47,6 @@ class FormBuilder
                                 ->afterStateUpdated(function ($set, $get, ?string $state) {
                                     $set('name', \Illuminate\Support\Str::snake($state));
                                     
-                                    // Generate placeholder
                                     if ($state) {
                                         $type = $get('type');
                                         $placeholder = match ($type) {

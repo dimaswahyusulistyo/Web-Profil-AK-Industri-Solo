@@ -26,19 +26,16 @@ class Komentar extends Model
         'is_approved' => 'boolean'
     ];
 
-    // Relasi polymorphic
     public function commentable()
     {
         return $this->morphTo();
     }
 
-    // Relasi ke induk komentar
     public function parent()
     {
         return $this->belongsTo(Komentar::class, 'parent_id');
     }
 
-    // Relasi ke anak komentar (balasan)
     public function replies()
     {
         return $this->hasMany(Komentar::class, 'parent_id');

@@ -22,12 +22,10 @@ class BeritaController extends Controller
             $query = Berita::with('kategori:id,nama_kategori,url_halaman')
                 ->orderBy('created_at', 'desc');
 
-            // Filter by search
             if ($search) {
                 $query->where('judul', 'like', '%' . $search . '%');
             }
 
-            // Filter by kategori
             if ($kategori) {
                 $query->whereHas('kategori', function($q) use ($kategori) {
                     $q->where('id', $kategori)
@@ -94,12 +92,10 @@ class BeritaController extends Controller
     public function show($id)
     {
         try {
-            // Coba cari berdasarkan url_halaman (slug) dahulu
             $berita = Berita::with('kategori:id,nama_kategori,url_halaman')
                 ->where('url_halaman', $id)
                 ->first();
 
-            // Jika tidak ditemukan, coba cari berdasarkan ID
             if (!$berita && is_numeric($id)) {
                 $berita = Berita::with('kategori:id,nama_kategori,url_halaman')
                     ->find($id);

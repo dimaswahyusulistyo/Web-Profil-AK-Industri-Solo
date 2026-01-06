@@ -19,7 +19,6 @@ class PengumumanController extends Controller
 
             $query = Pengumuman::orderBy('created_at', 'desc');
 
-            // Filter by search
             if ($search) {
                 $query->where('judul', 'like', '%' . $search . '%');
             }
@@ -52,10 +51,8 @@ class PengumumanController extends Controller
     public function show($id)
     {
         try {
-            // Coba cari berdasarkan url_halaman (slug) dahulu
             $pengumuman = Pengumuman::where('url_halaman', $id)->first();
 
-            // Jika tidak ditemukan, coba cari berdasarkan ID
             if (!$pengumuman && is_numeric($id)) {
                 $pengumuman = Pengumuman::find($id);
             }

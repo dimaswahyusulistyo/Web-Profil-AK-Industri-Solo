@@ -16,11 +16,13 @@ class Pengumuman extends Model
         'url_halaman',
         'thumbnail',
         'konten',
-        'button_text',
-        'button_url'
+        'buttons'
     ];
 
-    // Relasi ke komentar
+    protected $casts = [
+        'buttons' => 'array',
+    ];
+
     public function komentar()
     {
         return $this->morphMany(Komentar::class, 'commentable');

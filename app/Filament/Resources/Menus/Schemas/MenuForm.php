@@ -30,7 +30,6 @@ class MenuForm
                                 $query->where('id', '!=', $record->id);
                             }
                             
-                            // Ambil semua menu dan urutkan secara hierarki
                             $sortedIds = \App\Models\Menu::getTreeSortedIds();
                             $menus = \App\Models\Menu::when(!empty($sortedIds), function ($q) use ($sortedIds) {
                                 $q->orderByRaw("FIELD(id, " . implode(',', $sortedIds) . ")");
