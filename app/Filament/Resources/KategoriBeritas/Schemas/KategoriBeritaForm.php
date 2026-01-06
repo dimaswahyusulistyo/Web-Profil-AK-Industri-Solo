@@ -14,7 +14,7 @@ class KategoriBeritaForm
             TextInput::make('nama_kategori')
                 ->label('Nama Kategori')
                 ->required()
-                ->live(debounce: 300)
+                ->live(onBlur: true)
                 ->afterStateUpdated(function ($state, $set, $get) {
                     if (! $get('slug_manual')) {
                         $set('url_halaman', str($state)->slug());

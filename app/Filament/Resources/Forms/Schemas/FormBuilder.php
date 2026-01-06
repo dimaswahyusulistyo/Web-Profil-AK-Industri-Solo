@@ -44,7 +44,23 @@ class FormBuilder
                                 ->label('Label Field')
                                 ->required()
                                 ->live(onBlur: true)
-                                ->afterStateUpdated(fn ($set, ?string $state) => $set('name', \Illuminate\Support\Str::snake($state))),
+                                ->afterStateUpdated(function ($set, $get, ?string $state) {
+                                    $set('name', \Illuminate\Support\Str::snake($state));
+                                    
+                                    // Generate placeholder
+                                    if ($state) {
+                                        $type = $get('type');
+                                        $placeholder = match ($type) {
+                                            'text' => "Masukkan {$state}...",
+                                            'textarea' => "Tuliskan {$state}...",
+                                            'select' => "Pilih {$state}...",
+                                            'radio' => "Pilih salah satu {$state}...",
+                                            'file' => "Unggah {$state}...",
+                                            default => "Masukkan {$state}...",
+                                        };
+                                        $set('placeholder', $placeholder);
+                                    }
+                                }),
                             TextInput::make('name')
                                 ->label('Nama Input (Key)')
                                 ->required(),
@@ -59,7 +75,21 @@ class FormBuilder
                                     'file' => 'Upload File',
                                 ])
                                 ->required()
-                                ->live(),
+                                ->live()
+                                ->afterStateUpdated(function ($set, $get, ?string $state) {
+                                    $label = $get('label');
+                                    if ($label) {
+                                        $placeholder = match ($state) {
+                                            'text' => "Masukkan {$label}...",
+                                            'textarea' => "Tuliskan {$label}...",
+                                            'select' => "Pilih {$label}...",
+                                            'radio' => "Pilih salah satu {$label}...",
+                                            'file' => "Unggah {$label}...",
+                                            default => "Masukkan {$label}...",
+                                        };
+                                        $set('placeholder', $placeholder);
+                                    }
+                                }),
                             TextInput::make('placeholder')
                                 ->label('Placeholder'),
                             Toggle::make('is_required')
@@ -67,7 +97,10 @@ class FormBuilder
                             Repeater::make('options')
                                 ->label('Opsi Pilihan')
                                 ->schema([
-                                    TextInput::make('label')->required(),
+                                    TextInput::make('label')
+                                        ->required()
+                                        ->live(onBlur: true)
+                                        ->afterStateUpdated(fn ($set, ?string $state) => $set('value', \Illuminate\Support\Str::snake($state))),
                                     TextInput::make('value')->required(),
                                 ])
                                 ->visible(fn ($get) => in_array($get('type'), ['select', 'radio', 'checkbox']))
