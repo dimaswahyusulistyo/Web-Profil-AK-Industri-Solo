@@ -19,6 +19,11 @@ class KontenBiasaResource extends Resource
 {
     protected static ?string $model = KontenBiasa::class;
 
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->hasPermission('resource.KontenBiasa') ?? false;
+    }
+
     protected static UnitEnum|string|null $navigationGroup = 'Manajemen Konten';
 
     protected static BackedEnum|string|null $navigationIcon =

@@ -25,6 +25,11 @@ class IdentitasWebsiteResource extends Resource
 {
     protected static ?string $model = FooterSetting::class;
 
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->hasPermission('resource.IdentitasWebsite') ?? false;
+    }
+
     protected static UnitEnum|string|null $navigationGroup = 'Manajemen Konten';
 
     protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-cog';

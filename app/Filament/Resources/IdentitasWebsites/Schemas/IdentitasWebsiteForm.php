@@ -40,7 +40,7 @@ class IdentitasWebsiteForm
                     TextInput::make('copyright')
                         ->label('Copyright Text')
                         ->helperText('Teks hak cipta yang akan muncul di footer'),
-                ])->columns(2),
+                ])->columns(1)->columnSpanFull(),
             
             Section::make('Informasi Kontak')
                 ->extraAttributes(['class' => '!rounded-none !mt-0 !border-0 bg-transparent shadow-none'])
@@ -61,7 +61,7 @@ class IdentitasWebsiteForm
                         ->label('Alamat Kantor')
                         ->rows(3)
                         ->helperText('Alamat lengkap kantor atau instansi'),
-                ])->columns(1),
+                ])->columns(1)->columnSpanFull(),
 
             Section::make('Media Sosial')
                 ->extraAttributes(['class' => '!rounded-none !mt-0 !border-0 bg-transparent shadow-none'])
@@ -79,7 +79,7 @@ class IdentitasWebsiteForm
                     TextInput::make('youtube')
                         ->placeholder('https://www.youtube.com/channel/...')
                         ->helperText('URL YouTube channel'),
-                ])->columns(2),
+                ])->columns(1)->columnSpanFull(),
 
             Section::make('Tautan (Links)')
                 ->extraAttributes(['class' => '!rounded-none !mt-0 !border-0 bg-transparent shadow-none'])
@@ -90,15 +90,17 @@ class IdentitasWebsiteForm
                             TextInput::make('label')->required(),
                             TextInput::make('url')->required(),
                         ])
-                        ->columns(2),
+                        ->columns(1)
+                        ->columnSpanFull(),
                     Repeater::make('related_links')
                         ->label('Halaman Terkait')
                         ->schema([
                             TextInput::make('label')->required(),
                             TextInput::make('url')->required(),
                         ])
-                        ->columns(2),
-                ]),
+                        ->columns(1)
+                        ->columnSpanFull(),
+                ])->columnSpanFull(),
             Section::make('Pengaturan Umum')
                 ->extraAttributes(['class' => '!rounded-none !mt-0 !border-0 bg-transparent shadow-none'])
                 ->schema([
@@ -106,7 +108,7 @@ class IdentitasWebsiteForm
                         ->label('Aktifkan komentar')
                         ->helperText('Nonaktifkan untuk mematikan semua fitur komentar di website')
                         ->default(true),
-                ]),
+                ])->columnSpanFull(),
         ]);
     }
 }

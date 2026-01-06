@@ -20,6 +20,11 @@ use UnitEnum;
 class AspirasiAduanResource extends Resource
 {
     protected static ?string $model = AspirasiAduan::class;
+
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->hasPermission('resource.AspirasiAduan') ?? false;
+    }
     protected static bool $shouldRegisterNavigation = false;
     protected static UnitEnum|string|null $navigationGroup = 'Komentar & Aspirasi';
 

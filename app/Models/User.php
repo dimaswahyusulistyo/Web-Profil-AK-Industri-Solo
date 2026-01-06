@@ -50,4 +50,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function hasPermission(string $permission): bool
+    {
+        return $this->roles()->where('nama_role', 'Admin')->exists() || 
+               $this->roles()->whereJsonContains('permissions', $permission)->exists();
+    }
 }

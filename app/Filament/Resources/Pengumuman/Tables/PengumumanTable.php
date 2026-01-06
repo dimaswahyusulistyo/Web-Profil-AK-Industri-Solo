@@ -18,15 +18,14 @@ class PengumumanTable
     {
         return $table
             ->columns([
-                TextColumn::make('judul')
-                    ->searchable(),
                 ImageColumn::make('thumbnail')
                     ->disk('public')
                     ->visibility('public')
                     ->url(fn ($record) => $record->thumbnail ? Storage::url($record->thumbnail) : null)
                     ->label('Thumb')
                     ->height(60),
-
+                TextColumn::make('judul')
+                    ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

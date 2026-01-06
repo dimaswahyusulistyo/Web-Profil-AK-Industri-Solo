@@ -28,6 +28,26 @@ class FormSubmissionResource extends Resource
 {
     protected static ?string $model = FormSubmission::class;
 
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        if (!$user) return false;
+
+        // Admin has full access
+        if ($user->roles()->where('nama_role', 'Admin')->exists()) {
+            return true;
+        }
+
+        // Check if user has at least one dynamic form permission
+        // We check the permissions array for any key starting with "form."
+        // Or if they have a general resource permission
+        return $user->roles()
+            ->where(function($query) {
+                $query->whereJsonContains('permissions', 'resource.FormSubmission')
+                      ->orWhere('permissions', 'like', '%"form.%');
+            })->exists();
+    }
+
     // Hide from navigation since we'll use dynamic navigation items
     protected static bool $shouldRegisterNavigation = false;
 

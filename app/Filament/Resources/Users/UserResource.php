@@ -23,6 +23,11 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->hasPermission('resource.User') ?? false;
+    }
+
     protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-users';
     
     protected static UnitEnum|string|null $navigationGroup = 'Manajemen User';

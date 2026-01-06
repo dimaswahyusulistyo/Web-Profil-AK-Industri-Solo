@@ -17,16 +17,14 @@ class LayanansTable
     {
         return $table
             ->columns([
-
-                TextColumn::make('nama_layanan')
-                    ->label('Layanan')
-                    ->searchable()
-                    ->sortable(),
-
                 ImageColumn::make('ikon')
                     ->disk('public')
                     ->label('Ikon')
                     ->height(60),
+                TextColumn::make('nama_layanan')
+                    ->label('Layanan')
+                    ->searchable()
+                    ->sortable(),
 
                 TextColumn::make('tautan')
                     ->label('Tautan'),

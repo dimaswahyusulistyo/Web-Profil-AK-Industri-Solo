@@ -21,6 +21,11 @@ class BeritaResource extends Resource
 {
     protected static ?string $model = Berita::class;
 
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->hasPermission('resource.Berita') ?? false;
+    }
+
     protected static UnitEnum|string|null $navigationGroup = 'Manajemen Konten';
 
     protected static string|BackedEnum|null $navigationIcon =

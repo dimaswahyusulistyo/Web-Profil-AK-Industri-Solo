@@ -65,9 +65,15 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ])
-            ->navigationItems(
+            ]);
+    }
+
+    public function boot(): void
+    {
+        \Filament\Facades\Filament::serving(function () {
+            \Filament\Facades\Filament::registerNavigationItems(
                 \App\Filament\Navigation\DynamicFormNavigation::getItems()
             );
+        });
     }
 }

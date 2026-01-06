@@ -21,6 +21,11 @@ class KategoriBeritaResource extends Resource
 {
     protected static ?string $model = KategoriBerita::class;
 
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->hasPermission('resource.Berita.KategoriBerita') ?? false;
+    }
+
     protected static UnitEnum|string|null $navigationGroup = 'Manajemen Konten';
 
     protected static string|BackedEnum|null $navigationIcon =

@@ -17,6 +17,11 @@ class FormResource extends Resource
 {
     protected static ?string $model = Form::class;
 
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->hasPermission('resource.Form') ?? false;
+    }
+
     protected static UnitEnum|string|null $navigationGroup = 'Management Form';
 
     protected static string|BackedEnum|null $navigationIcon =

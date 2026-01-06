@@ -18,6 +18,11 @@ class KomentarResource extends Resource
 {
     protected static ?string $model = Komentar::class;
 
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->hasPermission('resource.Komentar') ?? false;
+    }
+
     protected static UnitEnum|string|null $navigationGroup = 'Komentar & Aspirasi';
     protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-chat-bubble-left';
     protected static ?string $navigationLabel = 'Komentar';

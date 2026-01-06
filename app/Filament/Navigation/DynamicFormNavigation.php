@@ -17,7 +17,17 @@ class DynamicFormNavigation
             ->orderBy('name')
             ->get();
         
+        $user = auth()->user();
+        if (!$user) return [];
+
+        $isAdmin = $user->roles()->where('nama_role', 'Admin')->exists();
+
         foreach ($forms as $form) {
+            // Check if user has permission for this specific form
+            if (!$isAdmin && !$user->hasPermission("form.{$form->id}")) {
+                continue;
+            }
+
             $submissionCount = FormSubmission::where('form_id', $form->id)->count();
             
             $items[] = NavigationItem::make($form->name)

@@ -20,6 +20,11 @@ class LayananResource extends Resource
 {
     protected static ?string $model = Layanan::class;
 
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->hasPermission('resource.Layanan') ?? false;
+    }
+
     protected static UnitEnum|string|null $navigationGroup = 'Manajemen Konten';
 
     protected static string|BackedEnum|null $navigationIcon =

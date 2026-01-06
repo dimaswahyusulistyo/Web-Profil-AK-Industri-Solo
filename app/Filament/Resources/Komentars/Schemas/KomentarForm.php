@@ -26,12 +26,16 @@ class KomentarForm
                     ->columnSpanFull()
                     ->disabled(),
                 TextInput::make('commentable_type')
-                    ->required()
+                    ->label('Sumber')
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'App\Models\Berita' => 'Berita',
+                        'App\Models\Pengumuman' => 'Pengumuman',
+                        default => (string) str($state)->afterLast('\\'),
+                    })
                     ->disabled(),
-                TextInput::make('commentable_id')
-                    ->required()
-                    ->numeric()
-                    ->disabled(),
+                \Filament\Forms\Components\Placeholder::make('commentable_title')
+                    ->label('Konten')
+                    ->content(fn ($record) => $record?->commentable?->judul ?? '-'),
                 TextInput::make('parent_id')
                     ->label('ID Komentar Induk')
                     ->numeric()

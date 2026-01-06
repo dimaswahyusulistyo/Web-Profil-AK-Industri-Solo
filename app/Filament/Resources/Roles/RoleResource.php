@@ -19,6 +19,11 @@ class RoleResource extends Resource
 {
     protected static ?string $model = Role::class;
 
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->hasPermission('resource.Role') ?? false;
+    }
+
     protected static UnitEnum|string|null $navigationGroup = 'Manajemen User';
 
     protected static BackedEnum|string|null $navigationIcon =

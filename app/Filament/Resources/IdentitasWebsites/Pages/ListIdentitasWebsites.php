@@ -16,4 +16,17 @@ class ListIdentitasWebsites extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
+    public function mount(): void
+    {
+        parent::mount();
+
+        $record = $this->getResource()::getModel()::first();
+
+        if ($record) {
+            $this->redirect($this->getResource()::getUrl('edit', ['record' => $record]));
+        } else {
+            $this->redirect($this->getResource()::getUrl('create'));
+        }
+    }
 }

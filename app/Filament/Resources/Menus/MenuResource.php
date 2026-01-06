@@ -21,6 +21,11 @@ class MenuResource extends Resource
 {
     protected static ?string $model = Menu::class;
 
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->hasPermission('resource.Menu') ?? false;
+    }
+
     protected static UnitEnum|string|null $navigationGroup = 'Navigasi';
 
     protected static string|BackedEnum|null $navigationIcon =

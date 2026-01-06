@@ -23,9 +23,16 @@ class KomentarsTable
                     ->label('Email address')
                     ->searchable(),
                 TextColumn::make('commentable_type')
-                    ->searchable(),
-                TextColumn::make('commentable_id')
-                    ->numeric()
+                    ->label('Sumber')
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'App\Models\Berita' => 'Berita',
+                        'App\Models\Pengumuman' => 'Pengumuman',
+                        default => (string) str($state)->afterLast('\\'),
+                    }),
+                TextColumn::make('commentable.judul')
+                    ->label('Konten')
+                    ->limit(50)
+                    ->searchable()
                     ->sortable(),
                 IconColumn::make('is_approved')
                     ->boolean(),

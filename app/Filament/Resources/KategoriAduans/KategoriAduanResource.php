@@ -15,6 +15,11 @@ use UnitEnum;
 class KategoriAduanResource extends Resource
 {
     protected static ?string $model = KategoriAduan::class;
+
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->hasPermission('resource.AspirasiAduan.KategoriAduan') ?? false;
+    }
     protected static bool $shouldRegisterNavigation = false;
 
     protected static BackedEnum|string|null $navigationIcon = 'heroicon-o-tag';
