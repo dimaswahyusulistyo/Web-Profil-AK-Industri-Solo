@@ -80,14 +80,14 @@ class MenuForm
             Section::make('Tujuan Menu')
                 ->schema([
                     Select::make('link_type')
-                        ->label('Tipe Link')
+                        ->label('Tipe Layout')
                         ->required()
                         ->options([
-                            'home' => 'Beranda',
-                            'konten_biasa' => 'Halaman Statis',
+                            'home' => 'Home',
+                            'konten_biasa' => 'Konten Biasa',
                             'berita_list' => 'Daftar Berita',
                             'pengumuman_list' => 'Daftar Pengumuman',
-                            'aspirasi_aduan' => 'Aspirasi & Aduan',
+                            'external' => 'Link External',
                         ])
                         ->live()
                         ->afterStateUpdated(function (Set $set, $state) {
@@ -97,7 +97,6 @@ class MenuForm
                                 'home' => '/',
                                 'berita_list' => '/berita',
                                 'pengumuman_list' => '/pengumuman',
-                                'aspirasi_aduan' => '/aspirasi-aduan',
                                 default => null,
                             });
                         }),
@@ -107,25 +106,38 @@ class MenuForm
                         ->relationship('page', 'judul')
                         ->searchable()
                         ->preload()
+                        ->live()
+                        ->afterStateUpdated(function (Set $set, $state) {
+                            if ($state) {
+                                $page = \App\Models\KontenBiasa::find($state);
+                                if ($page) {
+                                    $set('url_halaman', '/url/' . $page->url_halaman);
+                                }
+                            }
+                        })
                         ->visible(fn (Get $get) => $get('link_type') === 'konten_biasa')
                         ->required(fn (Get $get) => $get('link_type') === 'konten_biasa'),
 
                     TextInput::make('url_halaman')
                         ->label('URL Tujuan')
                         ->placeholder('/berita atau https://example.com')
+                        ->readOnly(fn (Get $get) => in_array(
+                            $get('link_type'),
+                            ['home', 'berita_list', 'pengumuman_list']
+                        ))
                         ->visible(fn (Get $get) => in_array(
                             $get('link_type'),
-                            ['home', 'berita_list', 'pengumuman_list', 'aspirasi_aduan']
+                            ['home', 'berita_list', 'pengumuman_list', 'external']
                         ))
                         ->required(fn (Get $get) => in_array(
                             $get('link_type'),
-                            ['home', 'berita_list', 'pengumuman_list', 'aspirasi_aduan']
+                            ['home', 'berita_list', 'pengumuman_list', 'external']
                         ))
                         ->helperText(fn (Get $get) => match ($get('link_type')) {
-                            'home' => 'Gunakan "/"',
-                            'berita_list' => 'Contoh: /berita',
-                            'pengumuman_list' => 'Contoh: /pengumuman',
-                            'aspirasi_aduan' => 'Contoh: /aspirasi-aduan',
+                            'home' => 'URL Tetap: /',
+                            'berita_list' => 'URL Tetap: /berita',
+                            'pengumuman_list' => 'URL Tetap: /pengumuman',
+                            'external' => 'Masukkan URL bebas (Contoh: https://google.com)',
                             default => null,
                         }),
                 ])

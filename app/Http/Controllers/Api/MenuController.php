@@ -53,11 +53,17 @@ class MenuController extends Controller
      */
     private function formatMenu($menu): array
     {
+        $url = $menu->url_halaman;
+        
+        if ($menu->link_type === 'konten_biasa' && $menu->page) {
+            $url = '/url/' . $menu->page->url_halaman;
+        }
+
         $data = [
             'id' => $menu->id,
             'nama_menu' => $menu->nama_menu,
             'link_type' => $menu->link_type,
-            'url_halaman' => $menu->url_halaman,
+            'url_halaman' => $url,
             'urutan' => $menu->urutan,
         ];
 
