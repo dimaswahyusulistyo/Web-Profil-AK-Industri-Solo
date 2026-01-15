@@ -21,6 +21,7 @@ use App\Models\Berita;
 use App\Models\KategoriBerita;
 use App\Policies\RestrictedPolicy;
 use App\Policies\BeritaPolicy;
+use App\Policies\KontenBiasaPolicy;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -48,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Komentar::class, RestrictedPolicy::class);
         Gate::policy(AspirasiAduan::class, RestrictedPolicy::class);
         Gate::policy(KategoriAduan::class, RestrictedPolicy::class);
-        Gate::policy(KontenBiasa::class, RestrictedPolicy::class);
+        Gate::policy(KontenBiasa::class, KontenBiasaPolicy::class);
 
         Gate::policy(Berita::class, BeritaPolicy::class);
         Gate::policy(KategoriBerita::class, BeritaPolicy::class);

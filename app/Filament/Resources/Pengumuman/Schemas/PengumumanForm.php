@@ -6,6 +6,7 @@ use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\DatePicker;
 
 use Filament\Schemas\Components\Utilities\Set;
 use Illuminate\Support\Str;
@@ -45,6 +46,14 @@ class PengumumanForm
                 ->fileAttachmentsDisk('public')
                 ->fileAttachmentsDirectory('pengumuman')
                 ->fileAttachmentsVisibility('public'),
+
+            DatePicker::make('created_at')
+                ->label('Tanggal Pengumuman')
+                ->required()
+                ->native(false)
+                ->displayFormat('d M Y')
+                ->format('Y-m-d')
+                ->default(now()),
 
             \Filament\Schemas\Components\Section::make('Link Buttons')
                 ->description('Tambahkan tombol link jika pengumuman ini merujuk ke link luar atau internal tertentu.')

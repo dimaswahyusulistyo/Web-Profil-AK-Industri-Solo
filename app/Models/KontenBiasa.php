@@ -17,12 +17,14 @@ class KontenBiasa extends Model
         'konten',
         'embeds',
         'form_id',
-        'buttons'
+        'buttons',
+        'link_groups'
     ];
 
     protected $casts = [
         'embeds' => 'array',
         'buttons' => 'array',
+        'link_groups' => 'array',
     ];
 
     public function form()

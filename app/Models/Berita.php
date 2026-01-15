@@ -15,7 +15,8 @@ class Berita extends Model
         'url_halaman',
         'kategori_id',
         'konten',
-        'thumbnail'
+        'thumbnail',
+        'created_at'
     ];
 
     public function kategori()

@@ -25,8 +25,6 @@ class RoleForm
                         'resource.Mitra' => 'Mitra',
                         'resource.Berita.KategoriBerita' => 'Kategori Berita',
                         'resource.Komentar' => 'Komentar',
-                        'resource.AspirasiAduan' => 'Aspirasi & Aduan',
-                        'resource.AspirasiAduan.KategoriAduan' => 'Kategori Aduan',
                         'resource.KontenBiasa' => 'Konten Biasa',
                         'resource.Menu' => 'Menu',
                         'resource.Slider' => 'Slider',

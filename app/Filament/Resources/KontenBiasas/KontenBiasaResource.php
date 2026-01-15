@@ -53,6 +53,20 @@ class KontenBiasaResource extends Resource
         return KontenBiasasTable::configure($table);
     }
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        $query = parent::getEloquentQuery();
+        
+        $user = auth()->user();
+        
+        // If user is Arsiparis, only show 'pusat-informasi' record
+        if ($user && $user->roles()->where('nama_role', 'Arsiparis')->exists()) {
+            $query->where('url_halaman', 'pusat-informasi');
+        }
+        
+        return $query;
+    }
+
     public static function getPages(): array
     {
         return [

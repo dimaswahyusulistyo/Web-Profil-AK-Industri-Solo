@@ -8,6 +8,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\DatePicker;
 
 class BeritaForm
 {
@@ -57,6 +58,14 @@ class BeritaForm
                 ->fileAttachmentsDisk('public')
                 ->fileAttachmentsDirectory('berita/konten')
                 ->fileAttachmentsVisibility('public'),
+
+            DatePicker::make('created_at')
+                ->label('Tanggal Pengumuman')
+                ->required()
+                ->native(false)
+                ->displayFormat('d M Y')
+                ->format('Y-m-d')
+                ->default(now()),
 
         ]);
     }

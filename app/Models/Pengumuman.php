@@ -16,7 +16,8 @@ class Pengumuman extends Model
         'url_halaman',
         'thumbnail',
         'konten',
-        'buttons'
+        'buttons',
+        'created_at'
     ];
 
     protected $casts = [

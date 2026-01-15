@@ -31,6 +31,10 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->passwordReset(
+                \App\Filament\Pages\Auth\ForgotPassword::class,
+                \App\Filament\Pages\Auth\ResetPassword::class
+            )
             ->colors([
                 'primary' => Color::Blue,
             ])
