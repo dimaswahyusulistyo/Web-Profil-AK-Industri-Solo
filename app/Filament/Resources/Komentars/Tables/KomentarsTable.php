@@ -18,6 +18,7 @@ class KomentarsTable
         return $table
             ->columns([
                 TextColumn::make('nama')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('email')
                     ->label('Email address')

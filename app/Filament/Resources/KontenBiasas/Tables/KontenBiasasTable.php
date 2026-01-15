@@ -17,6 +17,7 @@ class KontenBiasasTable
         return $table
             ->columns([
                 TextColumn::make('judul')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('url_halaman')
                     ->searchable(),

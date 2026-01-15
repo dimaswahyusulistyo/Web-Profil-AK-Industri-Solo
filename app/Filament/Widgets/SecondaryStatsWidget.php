@@ -31,10 +31,7 @@ class SecondaryStatsWidget extends BaseWidget
                 ->descriptionIcon('heroicon-m-chat-bubble-left-right')
                 ->color('info'),
 
-            Stat::make('Aspirasi & Aduan', $aspirasiTotal)
-                ->description("✓ Ditanggapi: {$aspirasiWithResponse} | ⏳ Belum: " . ($aspirasiTotal - $aspirasiWithResponse))
-                ->descriptionIcon('heroicon-m-clipboard-document-list')
-                ->color('danger'),
+
         ];
     }
 }

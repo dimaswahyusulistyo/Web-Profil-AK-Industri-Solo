@@ -20,7 +20,7 @@ class SlidersTable
                 ImageColumn::make('gambar')
                     ->disk('public')
                     ->height(60),
-                TextColumn::make('judul')->searchable(),
+                TextColumn::make('judul')->searchable()->sortable(),
                 TextColumn::make('urutan')->sortable(),
             ])
             ->defaultSort('urutan')

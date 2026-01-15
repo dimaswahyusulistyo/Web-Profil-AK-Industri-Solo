@@ -16,6 +16,7 @@ class FormTable
             ->columns([
                 TextColumn::make('name')
                     ->label('Nama Form')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('slug')
                     ->label('Slug API'),

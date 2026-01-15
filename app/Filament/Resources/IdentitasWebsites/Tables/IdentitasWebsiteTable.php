@@ -19,6 +19,13 @@ class IdentitasWebsiteTable
                 ImageColumn::make('header_logo')
                     ->label('Logo Header')
                     ->disk('public'),
+                TextColumn::make('website_title')
+                    ->label('Judul Website')
+                    ->searchable(),
+                ImageColumn::make('favicon')
+                    ->label('Favicon')
+                    ->disk('public')
+                    ->width(32),
                 ImageColumn::make('logo')
                     ->label('Logo Footer')
                     ->disk('public'),

@@ -25,7 +25,8 @@ class PengumumanTable
                     ->label('Thumb')
                     ->height(60),
                 TextColumn::make('judul')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

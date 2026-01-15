@@ -25,6 +25,18 @@ class IdentitasWebsiteForm
                         ->directory('branding')
                         ->helperText('Logo yang akan muncul di bagian atas (Header) website'),
 
+                    TextInput::make('website_title')
+                        ->label('Judul Website (Title)')
+                        ->maxLength(255)
+                        ->helperText('Judul yang muncul di tab browser'),
+
+                    FileUpload::make('favicon')
+                        ->label('Favicon')
+                        ->image()
+                        ->disk('public')
+                        ->directory('branding')
+                        ->helperText('Ikon kecil di tab browser (sebaiknya rasio 1:1, .ico atau .png)'),
+
                     FileUpload::make('logo')
                         ->label('Logo Footer')
                         ->image()

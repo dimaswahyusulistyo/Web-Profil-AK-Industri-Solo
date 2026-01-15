@@ -9,6 +9,8 @@ class FooterSetting extends Model
     protected $fillable = [
         'logo',
         'header_logo',
+        'website_title',
+        'favicon',
         'description',
         'phone',
         'email',
